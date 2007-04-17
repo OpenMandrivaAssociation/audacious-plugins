@@ -22,7 +22,7 @@
 
 Summary:	Audacious Media Player core plugins
 Name:		%name
-Version:	1.3.1
+Version:	1.3.3
 Release:	%release
 Epoch:		4
 Source0:	http://audacious-media-player.org/release/%fname.tar.bz2
@@ -287,6 +287,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/audacious/Effect/libaudiocompress.so
 %{_libdir}/audacious/Effect/libecho.so
 %{_libdir}/audacious/Effect/libladspa.so
+%{_libdir}/audacious/Effect/libsndstretch.so
 %{_libdir}/audacious/Effect/libstereo.so
 %{_libdir}/audacious/Effect/libvoice_removal.so
 %dir %{_libdir}/audacious/Output
@@ -351,5 +352,3 @@ rm -rf $RPM_BUILD_ROOT
 %files  -n audacious-projectm
 %defattr(-,root,root)
 %{_libdir}/audacious/Visualization/libprojectm.so
-
-
