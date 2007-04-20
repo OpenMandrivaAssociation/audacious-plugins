@@ -11,7 +11,7 @@
 %endif
 %else
 %define fname %name-%version
-%define release %mkrel 1
+%define release %mkrel 2
 %endif
 %define build_plf 0
 %{?_with_plf: %{expand: %%global build_plf 1}}
@@ -224,7 +224,7 @@ sh ./autogen.sh
 %make
 
 %install
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 %makeinstall_std
 
 rm -f %buildroot%_includedir/mp4.h
@@ -235,7 +235,7 @@ rm -fv %buildroot%_libdir/audacious/Input/libwma.so
 
 %find_lang %name
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 
 %files -f %name.lang
