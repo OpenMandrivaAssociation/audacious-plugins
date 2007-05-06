@@ -11,7 +11,7 @@
 %endif
 %else
 %define fname %name-%version
-%define release %mkrel 2
+%define release %mkrel 1
 %endif
 %define build_plf 0
 %{?_with_plf: %{expand: %%global build_plf 1}}
@@ -22,7 +22,7 @@
 
 Summary:	Audacious Media Player core plugins
 Name:		%name
-Version:	1.3.3
+Version:	1.3.4
 Release:	%release
 Epoch:		4
 Source0:	http://audacious-media-player.org/release/%fname.tar.bz2
@@ -241,10 +241,10 @@ rm -rf %{buildroot}
 %files -f %name.lang
 %defattr(0644,root,root,0755)
 %doc AUTHORS NEWS 
-%dir %_libdir/amidi-plug/
-%dir %_libdir/amidi-plug/audacious/
-%_libdir/amidi-plug/audacious/ap-alsa.so
-%_libdir/amidi-plug/audacious/ap-dummy.so
+%dir %_libdir/audacious/amidi-plug/
+%dir %_libdir/audacious/amidi-plug/
+%_libdir/audacious/amidi-plug/ap-alsa.so
+%_libdir/audacious/amidi-plug/ap-dummy.so
 %dir %{_libdir}/audacious
 %dir %{_libdir}/audacious/Container
 %{_libdir}/audacious/Container/libm3u.so
@@ -347,7 +347,7 @@ rm -rf %{buildroot}
 
 %files  -n audacious-fluidsynth
 %defattr(0644,root,root,0755)
-%_libdir/amidi-plug/audacious/ap-fluidsynth.so
+%_libdir/audacious/amidi-plug/ap-fluidsynth.so
 
 %files  -n audacious-projectm
 %defattr(-,root,root)
