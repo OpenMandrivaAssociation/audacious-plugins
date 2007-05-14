@@ -3,7 +3,7 @@
 %define pre 0
 %if %pre
 %if %svn
-%define release	%mkrel 0.%pre.%svn.1
+%define release	%mkrel 0.%pre.%svn.2
 %define fname %name-%svn
 %else
 %define release		%mkrel 0.%pre.1
@@ -11,7 +11,7 @@
 %endif
 %else
 %define fname %name-%version
-%define release %mkrel 1
+%define release %mkrel 2
 %endif
 %define build_plf 0
 %{?_with_plf: %{expand: %%global build_plf 1}}
@@ -42,7 +42,8 @@ BuildRequires:	libmodplug-devel
 BuildRequires:	libmms-devel
 BuildRequires:  liblirc-devel
 BuildRequires:	gtk2-devel >= 2.6.0
-BuildRequires: libmesaglut-devel
+BuildRequires:  libmesaglut-devel
+BuildRequires:  libxcomposite-devel
 BuildRequires:  SDL-devel
 BuildRequires:  libsndfile-devel
 BuildRequires:  libjack-devel
