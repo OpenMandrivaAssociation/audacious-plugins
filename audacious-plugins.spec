@@ -3,7 +3,7 @@
 %define pre 0
 %if %pre
 %if %svn
-%define release	%mkrel 0.%pre.%svn.2
+%define release	%mkrel 0.%pre.%svn.1
 %define fname %name-%svn
 %else
 %define release		%mkrel 0.%pre.1
@@ -11,7 +11,7 @@
 %endif
 %else
 %define fname %name-%version
-%define release %mkrel 2
+%define release %mkrel 1
 %endif
 %define build_plf 0
 %{?_with_plf: %{expand: %%global build_plf 1}}
@@ -22,7 +22,7 @@
 
 Summary:	Audacious Media Player core plugins
 Name:		%name
-Version:	1.3.4
+Version:	1.3.5
 Release:	%release
 Epoch:		4
 Source0:	http://audacious-media-player.org/release/%fname.tar.bz2
