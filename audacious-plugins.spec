@@ -221,7 +221,11 @@ sh ./autogen.sh
 %endif
 
 %build
-%configure2_5x --enable-amidiplug --enable-timidity
+%configure2_5x --enable-amidiplug --enable-timidity \
+%ifarch %ix86
+--disable-sse2
+%endif
+
 %make
 
 %install
