@@ -3,7 +3,7 @@
 %define pre 0
 %if %pre
 %if %svn
-%define release	%mkrel 0.%pre.%svn.1
+%define release	%mkrel 0.%pre.%svn.2
 %define fname %name-%svn
 %else
 %define release		%mkrel 0.%pre.1
