@@ -1,6 +1,6 @@
 %define name audacious-plugins
 %define svn 0
-%define pre 0
+%define pre dr4
 %if %pre
 %if %svn
 %define release	%mkrel 0.%pre.%svn.1
@@ -11,21 +11,21 @@
 %endif
 %else
 %define fname %name-%version
-%define release %mkrel 2
+%define release %mkrel 1
 %endif
 %define build_plf 0
 %{?_with_plf: %{expand: %%global build_plf 1}}
 %if %build_plf
 %define distsuffix plf
 %endif
-%define audacious %epoch:1.3.0-0.rc1
+%define audacious %epoch:1.3.99
 
 Summary:	Audacious Media Player core plugins
 Name:		%name
-Version:	1.3.5
+Version:	1.4.0
 Release:	%release
 Epoch:		4
-Source0:	http://audacious-media-player.org/release/%fname.tar.bz2
+Source0:	http://audacious-media-player.org/release/%fname.tbz2
 Patch3: audacious-862-timidity-config.patch
 License:	GPL
 Group:		Sound
@@ -51,11 +51,15 @@ BuildRequires:  libmpcdec-devel
 BuildRequires:  taglib-devel
 BuildRequires:  libmad-devel
 BuildRequires:  libmusicbrainz-devel
-BuildRequires:  libcurl-devel
 BuildRequires:  libbinio-devel
 BuildRequires:  libfluidsynth-devel
 BuildRequires:  libwavpack-devel
 BuildRequires:  libprojectm-devel
+BuildRequires:  libmtp-devel
+BuildRequires:  libflac-devel
+BuildRequires:  libcddb-devel
+BuildRequires:  libcdio-devel
+BuildRequires:  libimlib2-devel
 Provides:	beep-media-player-libvisual beep-media-player-lirc audacious-modplug beep-media-player-scrobbler audacious-scrobbler
 Obsoletes:	beep-media-player-libvisual beep-media-player-lirc audacious-modplug beep-media-player-scrobbler audacious-scrobbler
 %if %build_plf
@@ -253,32 +257,31 @@ rm -rf %{buildroot}
 %dir %{_libdir}/audacious
 %dir %{_libdir}/audacious/Container
 %{_libdir}/audacious/Container/libm3u.so
-%{_libdir}/audacious/Container/libmms.so
 %{_libdir}/audacious/Container/libpls.so
-%{_libdir}/audacious/Container/libstdio.so
 %{_libdir}/audacious/Container/libxspf.so
 %dir %{_libdir}/audacious/General
 %{_libdir}/audacious/General/libalarm.so
 %{_libdir}/audacious/General/libaosd.so
-%{_libdir}/audacious/General/libcurl.so
 %{_libdir}/audacious/General/libevdev-plug.so
+%{_libdir}/audacious/General/libhotkey.so
 %{_libdir}/audacious/General/liblirc.so
+%{_libdir}/audacious/General/libmtp_up.so
 %{_libdir}/audacious/General/libscrobbler.so
 %{_libdir}/audacious/General/libstatusicon.so
 %{_libdir}/audacious/General/libsong_change.so
 %dir %{_libdir}/audacious/Input
 %{_libdir}/audacious/Input/libalac.so
 %{_libdir}/audacious/Input/libamidi-plug.so
-%{_libdir}/audacious/Input/libcdaudio.so
+%{_libdir}/audacious/Input/libcdaudio-ng.so
 %{_libdir}/audacious/Input/libconsole.so
 %{_libdir}/audacious/Input/libcuesheet.so
-%{_libdir}/audacious/Input/libflac.so
+%{_libdir}/audacious/Input/libflacng.so
 %{_libdir}/audacious/Input/libmadplug.so
 %{_libdir}/audacious/Input/libmetronom.so
 %{_libdir}/audacious/Input/libmodplug.so
 %{_libdir}/audacious/Input/libtonegen.so
 %{_libdir}/audacious/Input/libtta.so
-%{_libdir}/audacious/Input/libvorbis.so
+%{_libdir}/audacious/Input/libvorbisplugin.so
 %{_libdir}/audacious/Input/libvtx.so
 %{_libdir}/audacious/Input/libwav.so
 #
@@ -298,15 +301,18 @@ rm -rf %{buildroot}
 %dir %{_libdir}/audacious/Output
 %{_libdir}/audacious/Output/libOSS.so
 %{_libdir}/audacious/Output/libALSA.so
-%{_libdir}/audacious/Output/libdisk_writer.so
-%if %build_plf
-%{_libdir}/audacious/Output/liblame.so
-%endif
+%{_libdir}/audacious/Output/libfilewriter.so
 %{_libdir}/audacious/Output/libnull.so
+%dir %{_libdir}/audacious/Transport/
+%{_libdir}/audacious/Transport/libcurlsrc.so
+%{_libdir}/audacious/Transport/liblastfm.so
+%{_libdir}/audacious/Transport/libmms.so
+%{_libdir}/audacious/Transport/libstdio.so
 %dir %{_libdir}/audacious/Visualization
 %{_libdir}/audacious/Visualization/libbscope.so
 %{_libdir}/audacious/Visualization/libparanormal.so
 %{_libdir}/audacious/Visualization/librocklight.so
+%{_libdir}/audacious/Visualization/librootvis.so
 %{_libdir}/audacious/Visualization/librovascope.so
 %{_libdir}/audacious/Visualization/libspectrum.so
 %_datadir/audacious
@@ -323,7 +329,7 @@ rm -rf %{buildroot}
 
 %files  -n audacious-wavpack
 %defattr(0644,root,root,0755)
-%{_libdir}/audacious/Input/libwavpack.so
+%{_libdir}/audacious/Input/libwavpackplugin.so
 
 %files  -n audacious-jack
 %defattr(0644,root,root,0755)
