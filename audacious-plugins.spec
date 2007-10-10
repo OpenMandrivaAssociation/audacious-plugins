@@ -54,6 +54,7 @@ BuildRequires:  taglib-devel
 BuildRequires:  libmad-devel
 BuildRequires:  libmusicbrainz-devel
 BuildRequires:  libbinio-devel
+BuildRequires:  libcurl-devel
 BuildRequires:  libfluidsynth-devel
 BuildRequires:  libwavpack-devel
 BuildRequires:  libprojectm-devel
