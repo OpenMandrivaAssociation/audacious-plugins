@@ -20,6 +20,8 @@
 %endif
 %define audacious %epoch:1.3.99
 
+%define build_arts 0
+
 Summary:	Audacious Media Player core plugins
 Name:		%name
 Version:	1.4.0
@@ -190,6 +192,7 @@ Requires: TiMidity++
 %description  -n audacious-timidity
 This adds MIDI support to Audacious.
 
+%if %build_arts
 %package  -n audacious-arts
 Group: Sound
 Summary: Arts output plugin for Audacious Media Player
@@ -201,6 +204,7 @@ Epoch: %epoch
 
 %description  -n audacious-arts
 This is a Arts output plugin for Audacious Media Player.
+%endif
 
 %package  -n audacious-projectm
 Group: Sound
@@ -227,7 +231,10 @@ sh ./autogen.sh
 %build
 %configure2_5x --enable-amidiplug --enable-timidity \
 %ifarch %ix86
---disable-sse2
+--disable-sse2 \
+%endif
+%if ! %build_arts
+--disable-arts
 %endif
 
 %make
@@ -351,10 +358,12 @@ rm -rf %{buildroot}
 %defattr(-,root,root)
 %{_libdir}/audacious/Input/libtimidity.so
 
+%if %build_arts
 %files  -n audacious-arts
 %defattr(-,root,root)
 %{_libdir}/audacious/Output/libarts.so
 %_bindir/audacious-arts-helper
+%endif
 
 %files  -n audacious-fluidsynth
 %defattr(0644,root,root,0755)
