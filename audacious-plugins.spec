@@ -1,6 +1,6 @@
 %define name audacious-plugins
 %define svn 0
-%define pre dr4
+%define pre beta1
 %if %pre
 %if %svn
 %define release	%mkrel 0.%pre.%svn.1
@@ -26,9 +26,8 @@ Summary:	Audacious Media Player core plugins
 Name:		%name
 Version:	1.4.0
 Release:	%release
-Epoch:		4
+Epoch:		5
 Source0:	http://audacious-media-player.org/release/%fname.tbz2
-Patch3: audacious-862-timidity-config.patch
 License:	GPL
 Group:		Sound
 Url:		http://audacious-media-player.org/
@@ -54,7 +53,8 @@ BuildRequires:  taglib-devel
 BuildRequires:  libmad-devel
 BuildRequires:  libmusicbrainz-devel
 BuildRequires:  libbinio-devel
-BuildRequires:  libcurl-devel
+BuildRequires:  libcurl-devel >= 7.9.7
+BuildRequires:  libneon-devel >= 0.26
 BuildRequires:  libfluidsynth-devel
 BuildRequires:  libwavpack-devel
 BuildRequires:  libprojectm-devel
@@ -222,9 +222,6 @@ This adds Visualization support to Audacious, based on projectM.
 %else
 %setup -q -n %fname
 %endif
-cd src
-%patch3 -p3 -b .timidity
-cd ..
 %if %svn
 sh ./autogen.sh
 %endif
@@ -258,106 +255,103 @@ rm -rf %{buildroot}
 %files -f %name.lang
 %defattr(0644,root,root,0755)
 %doc AUTHORS NEWS 
-%dir %_libdir/audacious/amidi-plug/
-%dir %_libdir/audacious/amidi-plug/
-%_libdir/audacious/amidi-plug/ap-alsa.so
-%_libdir/audacious/amidi-plug/ap-dummy.so
+%dir %_libdir/audacious/Input/amidi-plug/
+%_libdir/audacious/Input/amidi-plug/ap-alsa.so
+%_libdir/audacious/Input/amidi-plug/ap-dummy.so
 %dir %{_libdir}/audacious
 %dir %{_libdir}/audacious/Container
-%{_libdir}/audacious/Container/libm3u.so
-%{_libdir}/audacious/Container/libpls.so
-%{_libdir}/audacious/Container/libxspf.so
+%{_libdir}/audacious/Container/m3u.so
+%{_libdir}/audacious/Container/pls.so
+%{_libdir}/audacious/Container/xspf.so
 %dir %{_libdir}/audacious/General
-%{_libdir}/audacious/General/libalarm.so
-%{_libdir}/audacious/General/libaosd.so
-%{_libdir}/audacious/General/libevdev-plug.so
-%{_libdir}/audacious/General/libhotkey.so
-%{_libdir}/audacious/General/liblirc.so
-%{_libdir}/audacious/General/libmtp_up.so
-%{_libdir}/audacious/General/libscrobbler.so
-%{_libdir}/audacious/General/libstatusicon.so
-%{_libdir}/audacious/General/libsong_change.so
+%{_libdir}/audacious/General/alarm.so
+%{_libdir}/audacious/General/aosd.so
+%{_libdir}/audacious/General/evdev-plug.so
+%{_libdir}/audacious/General/gnomeshortcuts.so
+%{_libdir}/audacious/General/hotkey.so
+%{_libdir}/audacious/General/lirc.so
+%{_libdir}/audacious/General/mtp_up.so
+%{_libdir}/audacious/General/scrobbler.so
+%{_libdir}/audacious/General/statusicon.so
+%{_libdir}/audacious/General/song_change.so
 %dir %{_libdir}/audacious/Input
-%{_libdir}/audacious/Input/libalac.so
-%{_libdir}/audacious/Input/libamidi-plug.so
-%{_libdir}/audacious/Input/libcdaudio-ng.so
-%{_libdir}/audacious/Input/libconsole.so
-%{_libdir}/audacious/Input/libcuesheet.so
-%{_libdir}/audacious/Input/libflacng.so
-%{_libdir}/audacious/Input/libmadplug.so
-%{_libdir}/audacious/Input/libmetronom.so
-%{_libdir}/audacious/Input/libmodplug.so
-%{_libdir}/audacious/Input/libtonegen.so
-%{_libdir}/audacious/Input/libtta.so
-%{_libdir}/audacious/Input/libvorbisplugin.so
-%{_libdir}/audacious/Input/libvtx.so
-%{_libdir}/audacious/Input/libwav.so
+%{_libdir}/audacious/Input/alac.so
+%{_libdir}/audacious/Input/amidi-plug.so
+%{_libdir}/audacious/Input/cdaudio-ng.so
+%{_libdir}/audacious/Input/console.so
+%{_libdir}/audacious/Input/cuesheet.so
+%{_libdir}/audacious/Input/flacng.so
+%{_libdir}/audacious/Input/madplug.so
+%{_libdir}/audacious/Input/metronom.so
+%{_libdir}/audacious/Input/modplug.so
+%{_libdir}/audacious/Input/tonegen.so
+%{_libdir}/audacious/Input/tta.so
+%{_libdir}/audacious/Input/vorbis.so
+%{_libdir}/audacious/Input/vtx.so
+%{_libdir}/audacious/Input/wav.so
 #
-%{_libdir}/audacious/Input/libsexypsf.so
+%{_libdir}/audacious/Input/sexypsf.so
 #
 %if %build_plf
-%_libdir/audacious/Input/libaac.so
-%_libdir/audacious/Input/libwma.so
+%_libdir/audacious/Input/aac.so
+%_libdir/audacious/Input/wma.so
 %endif
 %dir %{_libdir}/audacious/Effect/
-%{_libdir}/audacious/Effect/libaudiocompress.so
-%{_libdir}/audacious/Effect/libecho.so
-%{_libdir}/audacious/Effect/libladspa.so
-%{_libdir}/audacious/Effect/libsndstretch.so
-%{_libdir}/audacious/Effect/libstereo.so
-%{_libdir}/audacious/Effect/libvoice_removal.so
+%{_libdir}/audacious/Effect/audiocompress.so
+%{_libdir}/audacious/Effect/echo.so
+%{_libdir}/audacious/Effect/ladspa.so
+%{_libdir}/audacious/Effect/sndstretch.so
+%{_libdir}/audacious/Effect/stereo.so
+%{_libdir}/audacious/Effect/voice_removal.so
 %dir %{_libdir}/audacious/Output
-%{_libdir}/audacious/Output/libOSS.so
-%{_libdir}/audacious/Output/libALSA.so
-%{_libdir}/audacious/Output/libfilewriter.so
-%{_libdir}/audacious/Output/libnull.so
+%{_libdir}/audacious/Output/OSS.so
+%{_libdir}/audacious/Output/ALSA.so
+%{_libdir}/audacious/Output/filewriter.so
+%{_libdir}/audacious/Output/null.so
 %dir %{_libdir}/audacious/Transport/
-%{_libdir}/audacious/Transport/libcurlsrc.so
-%{_libdir}/audacious/Transport/liblastfm.so
-%{_libdir}/audacious/Transport/libmms.so
-%{_libdir}/audacious/Transport/libstdio.so
+%{_libdir}/audacious/Transport/lastfm.so
+%{_libdir}/audacious/Transport/mms.so
+%{_libdir}/audacious/Transport/neon.so
+%{_libdir}/audacious/Transport/stdio.so
 %dir %{_libdir}/audacious/Visualization
-%{_libdir}/audacious/Visualization/libbscope.so
-%{_libdir}/audacious/Visualization/libparanormal.so
-%{_libdir}/audacious/Visualization/librocklight.so
-%{_libdir}/audacious/Visualization/librootvis.so
-%{_libdir}/audacious/Visualization/librovascope.so
-%{_libdir}/audacious/Visualization/libspectrum.so
+%{_libdir}/audacious/Visualization/blur_scope.so
+%{_libdir}/audacious/Visualization/paranormal.so
+%{_libdir}/audacious/Visualization/rocklight.so
+%{_libdir}/audacious/Visualization/rootvis.so
+%{_libdir}/audacious/Visualization/spectrum.so
 %_datadir/audacious
-%dir %_datadir/%name
-%_datadir/%name/paranormal
 
 %files  -n audacious-esd
 %defattr(0644,root,root,0755)
-%{_libdir}/audacious/Output/libESD.so
+%{_libdir}/audacious/Output/ESD.so
 
 %files  -n audacious-musepack
 %defattr(0644,root,root,0755)
-%{_libdir}/audacious/Input/libmpc.so
+%{_libdir}/audacious/Input/musepack.so
 
 %files  -n audacious-wavpack
 %defattr(0644,root,root,0755)
-%{_libdir}/audacious/Input/libwavpackplugin.so
+%{_libdir}/audacious/Input/wavpack.so
 
 %files  -n audacious-jack
 %defattr(0644,root,root,0755)
-%{_libdir}/audacious/Output/libjackout.so
+%{_libdir}/audacious/Output/jackout.so
 
 %files  -n audacious-pulse
 %defattr(0644,root,root,0755)
-%{_libdir}/audacious/Output/libpulse_audio.so
+%{_libdir}/audacious/Output/pulse_audio.so
 
 %files  -n audacious-sid
 %defattr(-,root,root)
-%{_libdir}/audacious/Input/libsid.so
+%{_libdir}/audacious/Input/sid.so
 
 %files  -n audacious-adplug
 %defattr(-,root,root)
-%{_libdir}/audacious/Input/libadplug.so
+%{_libdir}/audacious/Input/adplug.so
 
 %files  -n audacious-timidity
 %defattr(-,root,root)
-%{_libdir}/audacious/Input/libtimidity.so
+%{_libdir}/audacious/Input/timidity.so
 
 %if %build_arts
 %files  -n audacious-arts
@@ -368,8 +362,8 @@ rm -rf %{buildroot}
 
 %files  -n audacious-fluidsynth
 %defattr(0644,root,root,0755)
-%_libdir/audacious/amidi-plug/ap-fluidsynth.so
+%_libdir/audacious/Input/amidi-plug/ap-fluidsynth.so
 
 %files  -n audacious-projectm
 %defattr(-,root,root)
-%{_libdir}/audacious/Visualization/libprojectm.so
+%{_libdir}/audacious/Visualization/projectm.so
