@@ -243,8 +243,8 @@ rm -rf %{buildroot}
 
 rm -f %buildroot%_includedir/mp4.h
 %if !%build_plf
-rm -fv %buildroot%_libdir/audacious/Input/libaac.so
-rm -fv %buildroot%_libdir/audacious/Input/libwma.so
+rm -fv %buildroot%_libdir/audacious/Input/aac.so
+rm -fv %buildroot%_libdir/audacious/Input/wma.so
 %endif
 
 %find_lang %name
