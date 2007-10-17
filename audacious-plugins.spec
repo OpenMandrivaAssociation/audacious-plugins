@@ -6,7 +6,7 @@
 %define release	%mkrel 0.%pre.%svn.1
 %define fname %name-%svn
 %else
-%define release		%mkrel 0.%pre.1
+%define release		%mkrel 0.%pre.2
 %define fname %name-%version-%pre
 %endif
 %else
@@ -20,7 +20,7 @@
 %endif
 %define audacious %epoch:1.3.99
 
-%define build_arts 0
+%define build_arts 1
 
 Summary:	Audacious Media Player core plugins
 Name:		%name
@@ -356,7 +356,7 @@ rm -rf %{buildroot}
 %if %build_arts
 %files  -n audacious-arts
 %defattr(-,root,root)
-%{_libdir}/audacious/Output/libarts.so
+%{_libdir}/audacious/Output/arts.so
 %_bindir/audacious-arts-helper
 %endif
 
