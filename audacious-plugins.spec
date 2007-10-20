@@ -57,7 +57,7 @@ BuildRequires:  libcurl-devel >= 7.9.7
 BuildRequires:  libneon-devel >= 0.26
 BuildRequires:  libfluidsynth-devel
 BuildRequires:  libwavpack-devel
-BuildRequires:  libprojectm-devel
+BuildRequires:  libprojectm-devel >= 1.0
 BuildRequires:  libmtp-devel
 BuildRequires:  libflac-devel
 BuildRequires:  libcddb-devel
@@ -366,4 +366,4 @@ rm -rf %{buildroot}
 
 %files  -n audacious-projectm
 %defattr(-,root,root)
-%{_libdir}/audacious/Visualization/projectm.so
+%{_libdir}/audacious/Visualization/projectm-1.0.so
