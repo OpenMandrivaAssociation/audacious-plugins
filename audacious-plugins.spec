@@ -1,12 +1,12 @@
 %define name audacious-plugins
 %define svn 0
-%define pre beta1
+%define pre beta3
 %if %pre
 %if %svn
 %define release	%mkrel 0.%pre.%svn.1
 %define fname %name-%svn
 %else
-%define release		%mkrel 0.%pre.2
+%define release		%mkrel 0.%pre.1
 %define fname %name-%version-%pre
 %endif
 %else
