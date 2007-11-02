@@ -1,6 +1,6 @@
 %define name audacious-plugins
 %define svn 0
-%define pre beta4
+%define pre rc1
 %define rel 1
 %if %pre
 %if %svn
