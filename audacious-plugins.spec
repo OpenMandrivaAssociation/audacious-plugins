@@ -1,6 +1,7 @@
 %define name audacious-plugins
+%define version 1.4.1
 %define svn 0
-%define pre rc1
+%define pre 0
 %define rel 1
 %if %pre
 %if %svn
@@ -19,13 +20,13 @@
 %if %build_plf
 %define distsuffix plf
 %endif
-%define audacious %epoch:1.3.99
+%define audacious %epoch:1.4.1
 
 %define build_arts 1
 
 Summary:	Audacious Media Player core plugins
 Name:		%name
-Version:	1.4.0
+Version:	%version
 Release:	%release
 Epoch:		5
 Source0:	http://audacious-media-player.org/release/%fname.tbz2
