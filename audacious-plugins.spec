@@ -33,7 +33,6 @@ Source0:	http://audacious-media-player.org/release/%fname.tbz2
 License:	GPL
 Group:		Sound
 Url:		http://audacious-media-player.org/
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Requires:	audacious >= %audacious
 BuildRequires:	libaudacious-devel >= %audacious
 BuildRequires:	alsa-lib-devel >= 1.0.0
