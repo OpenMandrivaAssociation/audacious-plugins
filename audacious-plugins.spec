@@ -1,5 +1,5 @@
 %define name audacious-plugins
-%define version 1.4.3
+%define version 1.4.3.2
 %define svn 0
 %define pre 0
 %define rel 1
