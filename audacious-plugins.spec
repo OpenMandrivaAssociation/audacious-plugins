@@ -1,5 +1,5 @@
 %define name audacious-plugins
-%define version 1.4.3.2
+%define version 1.4.4
 %define svn 0
 %define pre 0
 %define rel 1
@@ -30,7 +30,7 @@ Version:	%version
 Release:	%release
 Epoch:		5
 Source0:	http://audacious-media-player.org/release/%fname.tbz2
-License:	GPL
+License:	GPLv2+
 Group:		Sound
 Url:		http://audacious-media-player.org/
 Requires:	audacious >= %audacious
