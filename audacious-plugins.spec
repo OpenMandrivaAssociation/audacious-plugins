@@ -190,7 +190,7 @@ Summary: MIDI support for Audacious
 Requires: audacious
 Epoch: %epoch
 #gw for the instruments
-Requires: TiMidity++
+Requires: timidity-instruments = 2
 
 %description  -n audacious-timidity
 This adds MIDI support to Audacious.
@@ -229,7 +229,7 @@ sh ./autogen.sh
 %endif
 
 %build
-%configure2_5x --enable-amidiplug --enable-timidity \
+%configure2_5x --enable-amidiplug  --disable-timidity \
 %ifarch %ix86
 --disable-sse2 \
 %endif
@@ -351,9 +351,11 @@ rm -rf %{buildroot}
 %defattr(-,root,root)
 %{_libdir}/audacious/Input/adplug.so
 
+%if 0
 %files  -n audacious-timidity
 %defattr(-,root,root)
 %{_libdir}/audacious/Input/timidity.so
+%endif
 
 %if %build_arts
 %files  -n audacious-arts
