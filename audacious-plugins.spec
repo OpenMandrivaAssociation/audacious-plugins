@@ -72,6 +72,8 @@ BuildRequires: liblame-devel
 Provides:beep-media-player-mp4 audacious-extra-plugins
 Obsoletes:beep-media-player-mp4 audacious-extra-plugins
 %endif
+#gw make sure the broken plugin is removed
+Obsoletes: audacious-timidity
 
 %description
 Audacious is a media player based on the BMP music playing application.
