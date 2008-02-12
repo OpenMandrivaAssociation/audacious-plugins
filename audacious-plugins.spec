@@ -2,7 +2,7 @@
 %define version 1.4.5
 %define svn 0
 %define pre 0
-%define rel 1
+%define rel 2
 %if %pre
 %if %svn
 %define release	%mkrel 0.%pre.%svn.%rel
@@ -30,6 +30,8 @@ Version:	%version
 Release:	%release
 Epoch:		5
 Source0:	http://audacious-media-player.org/release/%fname.tbz2
+#gw support the new gnome multimedia keys API
+Patch: audacious-plugins-1.4.5-new-mmkeys-api.patch
 License:	GPLv2+
 Group:		Sound
 Url:		http://audacious-media-player.org/
@@ -226,6 +228,7 @@ This adds Visualization support to Audacious, based on projectM.
 %else
 %setup -q -n %fname
 %endif
+%patch -p1
 %if %svn
 sh ./autogen.sh
 %endif
