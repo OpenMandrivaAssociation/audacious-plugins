@@ -1,8 +1,8 @@
 %define name audacious-plugins
-%define version 1.4.5
+%define version 1.5.0
 %define svn 0
 %define pre 0
-%define rel 2
+%define rel 1
 %if %pre
 %if %svn
 %define release	%mkrel 0.%pre.%svn.%rel
@@ -20,7 +20,7 @@
 %if %build_plf
 %define distsuffix plf
 %endif
-%define audacious %epoch:1.4.1
+%define audacious %epoch:1.5.0
 
 %define build_arts 1
 
@@ -30,8 +30,6 @@ Version:	%version
 Release:	%release
 Epoch:		5
 Source0:	http://audacious-media-player.org/release/%fname.tbz2
-#gw support the new gnome multimedia keys API
-Patch: audacious-plugins-1.4.5-new-mmkeys-api.patch
 License:	GPLv2+
 Group:		Sound
 Url:		http://audacious-media-player.org/
@@ -61,7 +59,8 @@ BuildRequires:  libcurl-devel >= 7.9.7
 BuildRequires:  libneon-devel >= 0.26
 BuildRequires:  libfluidsynth-devel
 BuildRequires:  libwavpack-devel
-BuildRequires:  libprojectm-devel >= 1.0
+BuildRequires:  libprojectm-devel >= 1.0 gtkglext-devel >= 1.2.0
+BuildRequires:  libprojectm-devel < 1.10
 BuildRequires:  libmtp-devel
 BuildRequires:  libflac-devel
 BuildRequires:  libcddb-devel
@@ -228,7 +227,6 @@ This adds Visualization support to Audacious, based on projectM.
 %else
 %setup -q -n %fname
 %endif
-%patch -p1
 %if %svn
 sh ./autogen.sh
 %endif
@@ -287,15 +285,16 @@ rm -rf %{buildroot}
 %{_libdir}/audacious/Input/cdaudio-ng.so
 %{_libdir}/audacious/Input/console.so
 %{_libdir}/audacious/Input/cuesheet.so
+%{_libdir}/audacious/Input/demac.so
 %{_libdir}/audacious/Input/flacng.so
 %{_libdir}/audacious/Input/madplug.so
 %{_libdir}/audacious/Input/metronom.so
 %{_libdir}/audacious/Input/modplug.so
+%{_libdir}/audacious/Input/sndfile.so
 %{_libdir}/audacious/Input/tonegen.so
 %{_libdir}/audacious/Input/tta.so
 %{_libdir}/audacious/Input/vorbis.so
 %{_libdir}/audacious/Input/vtx.so
-%{_libdir}/audacious/Input/wav.so
 #
 %{_libdir}/audacious/Input/sexypsf.so
 #
