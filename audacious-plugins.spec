@@ -259,7 +259,7 @@ rm -rf %{buildroot}
 
 %files -f %name.lang
 %defattr(0644,root,root,0755)
-%doc AUTHORS NEWS 
+%doc AUTHORS
 %dir %_libdir/audacious/Input/amidi-plug/
 %_libdir/audacious/Input/amidi-plug/ap-alsa.so
 %_libdir/audacious/Input/amidi-plug/ap-dummy.so
