@@ -202,7 +202,7 @@ This adds MIDI support to Audacious.
 Group: Sound
 Summary: Arts output plugin for Audacious Media Player
 Requires: audacious
-BuildRequires: libarts-devel
+BuildRequires: libarts-devel kdelibs-common
 Provides: beep-media-player-arts
 Obsoletes: beep-media-player-arts
 Epoch: %epoch
