@@ -1,5 +1,5 @@
 %define name audacious-plugins
-%define version 1.5.0
+%define version 1.5.1
 %define svn 0
 %define pre 0
 %define rel 1
@@ -20,7 +20,7 @@
 %if %build_plf
 %define distsuffix plf
 %endif
-%define audacious %epoch:1.5.0
+%define audacious %epoch:1.5.1
 
 %define build_arts 1
 
@@ -59,8 +59,7 @@ BuildRequires:  libcurl-devel >= 7.9.7
 BuildRequires:  libneon-devel >= 0.26
 BuildRequires:  libfluidsynth-devel
 BuildRequires:  libwavpack-devel
-BuildRequires:  libprojectm-devel >= 1.0 gtkglext-devel >= 1.2.0
-BuildRequires:  libprojectm-devel < 1.10
+BuildRequires:  libprojectm-devel >= 1:1.1 gtkglext-devel >= 1.2.0
 BuildRequires:  libmtp-devel
 BuildRequires:  libflac-devel
 BuildRequires:  libcddb-devel
@@ -232,6 +231,7 @@ sh ./autogen.sh
 %endif
 
 %build
+%define _disable_ld_no_undefined 1
 %configure2_5x --enable-amidiplug  --disable-timidity \
 %ifarch %ix86
 --disable-sse2 \
@@ -304,6 +304,7 @@ rm -rf %{buildroot}
 %endif
 %dir %{_libdir}/audacious/Effect/
 %{_libdir}/audacious/Effect/audiocompress.so
+%{_libdir}/audacious/Effect/crystalizer.so
 %{_libdir}/audacious/Effect/echo.so
 %{_libdir}/audacious/Effect/ladspa.so
 %{_libdir}/audacious/Effect/sndstretch.so
