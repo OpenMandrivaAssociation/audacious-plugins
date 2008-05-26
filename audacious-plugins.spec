@@ -30,6 +30,7 @@ Version:	%version
 Release:	%release
 Epoch:		5
 Source0:	http://audacious-media-player.org/release/%fname.tbz2
+Patch: audacious-plugins-1.5.1-fix-linking.patch
 License:	GPLv2+
 Group:		Sound
 Url:		http://audacious-media-player.org/
@@ -226,12 +227,12 @@ This adds Visualization support to Audacious, based on projectM.
 %else
 %setup -q -n %fname
 %endif
+%patch -p1 -b .linking
 %if %svn
 sh ./autogen.sh
 %endif
 
 %build
-%define _disable_ld_no_undefined 1
 %configure2_5x --enable-amidiplug  --disable-timidity \
 %ifarch %ix86
 --disable-sse2 \
