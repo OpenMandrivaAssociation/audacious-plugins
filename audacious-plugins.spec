@@ -2,7 +2,7 @@
 %define version 1.5.1
 %define svn 0
 %define pre 0
-%define rel 2
+%define rel 3
 %if %pre
 %if %svn
 %define release	%mkrel 0.%pre.%svn.%rel
@@ -31,6 +31,7 @@ Release:	%release
 Epoch:		5
 Source0:	http://audacious-media-player.org/release/%fname.tbz2
 Patch: audacious-plugins-1.5.1-fix-linking.patch
+Patch1: audacious-plugins-1.5.1-libmtp-0.3.0-build-fix.patch
 License:	GPLv2+
 Group:		Sound
 Url:		http://audacious-media-player.org/
@@ -61,7 +62,7 @@ BuildRequires:  libneon-devel >= 0.26
 BuildRequires:  libfluidsynth-devel
 BuildRequires:  libwavpack-devel
 BuildRequires:  libprojectm-devel >= 1:1.1 gtkglext-devel >= 1.2.0
-BuildRequires:  libmtp-devel
+BuildRequires:  libmtp-devel >= 0.3.0
 BuildRequires:  libflac-devel
 BuildRequires:  libcddb-devel
 BuildRequires:  libcdio-devel
@@ -187,17 +188,6 @@ For the actual playing, it uses the excellent libsidplay (1|2)
 emulator engine that emulates 6510 CPU and 6581/8580 Sound Interface
 Device (SID) chip.
 
-%package  -n audacious-timidity
-Group: Sound
-Summary: MIDI support for Audacious
-Requires: audacious
-Epoch: %epoch
-#gw for the instruments
-Requires: timidity-instruments = 2
-
-%description  -n audacious-timidity
-This adds MIDI support to Audacious.
-
 %if %build_arts
 %package  -n audacious-arts
 Group: Sound
@@ -228,6 +218,7 @@ This adds Visualization support to Audacious, based on projectM.
 %setup -q -n %fname
 %endif
 %patch -p1 -b .linking
+%patch1 -p0
 %if %svn
 sh ./autogen.sh
 %endif
