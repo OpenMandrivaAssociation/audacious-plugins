@@ -2,7 +2,7 @@
 %define version 1.5.1
 %define svn 0
 %define pre 0
-%define rel 3
+%define rel 4
 %if %pre
 %if %svn
 %define release	%mkrel 0.%pre.%svn.%rel
