@@ -76,6 +76,9 @@ Obsoletes:beep-media-player-mp4 audacious-extra-plugins
 %endif
 #gw make sure the broken plugin is removed
 Obsoletes: audacious-timidity
+#gw 2.0.0 has its own crossfader and the old one does not build anymore
+Provides: audacious-crossfade
+Obsoletes: audacious-crossfade
 
 %description
 Audacious is a media player based on the BMP music playing application.
