@@ -1,8 +1,8 @@
 %define name audacious-plugins
-%define version 1.5.1
+%define version 2.0.0
 %define svn 0
 %define pre 0
-%define rel 5
+%define rel 1
 %if %pre
 %if %svn
 %define release	%mkrel 0.%pre.%svn.%rel
@@ -20,18 +20,16 @@
 %if %build_plf
 %define distsuffix plf
 %endif
-%define audacious %epoch:1.5.1
-
-%define build_arts 1
+%define audacious %epoch:1.9.0
 
 Summary:	Audacious Media Player core plugins
 Name:		%name
 Version:	%version
 Release:	%release
 Epoch:		5
-Source0:	http://audacious-media-player.org/release/%fname.tbz2
-Patch: audacious-plugins-1.5.1-fix-linking.patch
-Patch1: audacious-plugins-1.5.1-libmtp-0.3.0-build-fix.patch
+Source0:	http://audacious-media-player.org/release/%fname.tgz
+Patch: audacious-plugins-2.0.0-fix-linking.patch
+Patch2: audacious-plugins-2.0.0-format-strings.patch
 License:	GPLv2+
 Group:		Sound
 Url:		http://audacious-media-player.org/
@@ -56,6 +54,7 @@ BuildRequires:  libmpcdec-devel
 BuildRequires:  taglib-devel
 BuildRequires:  libmad-devel
 BuildRequires:  libmusicbrainz-devel
+BuildRequires:  bluez-devel
 BuildRequires:  libbinio-devel
 BuildRequires:  libcurl-devel >= 7.9.7
 BuildRequires:  libneon-devel >= 0.26
@@ -67,6 +66,7 @@ BuildRequires:  libflac-devel
 BuildRequires:  libcddb-devel
 BuildRequires:  libcdio-devel
 BuildRequires:  libimlib2-devel
+BuildRequires:  libshout-devel
 Provides:	beep-media-player-libvisual beep-media-player-lirc audacious-modplug beep-media-player-scrobbler audacious-scrobbler
 Obsoletes:	beep-media-player-libvisual beep-media-player-lirc audacious-modplug beep-media-player-scrobbler audacious-scrobbler
 %if %build_plf
@@ -188,19 +188,6 @@ For the actual playing, it uses the excellent libsidplay (1|2)
 emulator engine that emulates 6510 CPU and 6581/8580 Sound Interface
 Device (SID) chip.
 
-%if %build_arts
-%package  -n audacious-arts
-Group: Sound
-Summary: Arts output plugin for Audacious Media Player
-Requires: audacious
-BuildRequires: libarts-devel kdelibs-common
-Provides: beep-media-player-arts
-Obsoletes: beep-media-player-arts
-Epoch: %epoch
-
-%description  -n audacious-arts
-This is a Arts output plugin for Audacious Media Player.
-%endif
 
 %package  -n audacious-projectm
 Group: Sound
@@ -218,7 +205,7 @@ This adds Visualization support to Audacious, based on projectM.
 %setup -q -n %fname
 %endif
 %patch -p1 -b .linking
-%patch1 -p0
+%patch2 -p1 -b .format-strings
 %if %svn
 sh ./autogen.sh
 %endif
@@ -227,9 +214,6 @@ sh ./autogen.sh
 %configure2_5x --enable-amidiplug  --disable-timidity \
 %ifarch %ix86
 --disable-sse2 \
-%endif
-%if ! %build_arts
---disable-arts
 %endif
 
 %make
@@ -263,30 +247,36 @@ rm -rf %{buildroot}
 %dir %{_libdir}/audacious/General
 %{_libdir}/audacious/General/alarm.so
 %{_libdir}/audacious/General/aosd.so
+%{_libdir}/audacious/General/bluetooth.so
 %{_libdir}/audacious/General/evdev-plug.so
 %{_libdir}/audacious/General/gnomeshortcuts.so
 %{_libdir}/audacious/General/hotkey.so
 %{_libdir}/audacious/General/lirc.so
 %{_libdir}/audacious/General/mtp_up.so
 %{_libdir}/audacious/General/scrobbler.so
+%{_libdir}/audacious/General/skins.so
 %{_libdir}/audacious/General/statusicon.so
+%{_libdir}/audacious/General/streambrowser.so
 %{_libdir}/audacious/General/song_change.so
+%{_libdir}/audacious/General/vfstrace.so
 %dir %{_libdir}/audacious/Input
 %{_libdir}/audacious/Input/alac.so
 %{_libdir}/audacious/Input/amidi-plug.so
 %{_libdir}/audacious/Input/cdaudio-ng.so
 %{_libdir}/audacious/Input/console.so
-%{_libdir}/audacious/Input/cuesheet.so
+%{_libdir}/audacious/Input/cuesheet_ng.so
 %{_libdir}/audacious/Input/demac.so
 %{_libdir}/audacious/Input/flacng.so
 %{_libdir}/audacious/Input/madplug.so
 %{_libdir}/audacious/Input/metronom.so
 %{_libdir}/audacious/Input/modplug.so
+%{_libdir}/audacious/Input/psf2.so
 %{_libdir}/audacious/Input/sndfile.so
 %{_libdir}/audacious/Input/tonegen.so
 %{_libdir}/audacious/Input/tta.so
 %{_libdir}/audacious/Input/vorbis.so
 %{_libdir}/audacious/Input/vtx.so
+%{_libdir}/audacious/Input/xsf.so
 #
 %{_libdir}/audacious/Input/sexypsf.so
 #
@@ -305,13 +295,15 @@ rm -rf %{buildroot}
 %dir %{_libdir}/audacious/Output
 %{_libdir}/audacious/Output/OSS.so
 %{_libdir}/audacious/Output/ALSA.so
+%{_libdir}/audacious/Output/crossfade.so
 %{_libdir}/audacious/Output/filewriter.so
+%{_libdir}/audacious/Output/icecast.so
 %{_libdir}/audacious/Output/null.so
 %dir %{_libdir}/audacious/Transport/
+%{_libdir}/audacious/Transport/gio.so
 %{_libdir}/audacious/Transport/lastfm.so
 %{_libdir}/audacious/Transport/mms.so
 %{_libdir}/audacious/Transport/neon.so
-%{_libdir}/audacious/Transport/stdio.so
 %dir %{_libdir}/audacious/Visualization
 %{_libdir}/audacious/Visualization/blur_scope.so
 %{_libdir}/audacious/Visualization/paranormal.so
@@ -352,13 +344,6 @@ rm -rf %{buildroot}
 %files  -n audacious-timidity
 %defattr(-,root,root)
 %{_libdir}/audacious/Input/timidity.so
-%endif
-
-%if %build_arts
-%files  -n audacious-arts
-%defattr(-,root,root)
-%{_libdir}/audacious/Output/arts.so
-%_bindir/audacious-arts-helper
 %endif
 
 %files  -n audacious-fluidsynth
