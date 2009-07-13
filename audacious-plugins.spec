@@ -1,5 +1,5 @@
 %define name audacious-plugins
-%define version 2.0.1
+%define version 2.1
 %define svn 0
 %define pre 0
 %define rel 1
@@ -20,7 +20,7 @@
 %if %build_plf
 %define distsuffix plf
 %endif
-%define audacious %epoch:1.9.0
+%define audacious %epoch:2.1
 
 Summary:	Audacious Media Player core plugins
 Name:		%name
@@ -28,8 +28,9 @@ Version:	%version
 Release:	%release
 Epoch:		5
 Source0:	http://audacious-media-player.org/release/%fname.tgz
-Patch: audacious-plugins-2.0.0-fix-linking.patch
-Patch2: audacious-plugins-2.0.0-format-strings.patch
+Patch: audacious-plugins-2.1-beta1-linking.patch
+Patch1: audacious-plugins-2.1-fix-build.patch
+Patch2: audacious-plugins-2.1-beta1-format-strings.patch
 License:	GPLv2+
 Group:		Sound
 Url:		http://audacious-media-player.org/
@@ -208,6 +209,7 @@ This adds Visualization support to Audacious, based on projectM.
 %setup -q -n %fname
 %endif
 %patch -p1 -b .linking
+%patch1 -p1
 %patch2 -p1 -b .format-strings
 %if %svn
 sh ./autogen.sh
@@ -253,6 +255,7 @@ rm -rf %{buildroot}
 %{_libdir}/audacious/General/bluetooth.so
 %{_libdir}/audacious/General/evdev-plug.so
 %{_libdir}/audacious/General/gnomeshortcuts.so
+%{_libdir}/audacious/General/gtkui.so
 %{_libdir}/audacious/General/hotkey.so
 %{_libdir}/audacious/General/lirc.so
 %{_libdir}/audacious/General/mtp_up.so
@@ -281,7 +284,7 @@ rm -rf %{buildroot}
 %{_libdir}/audacious/Input/vtx.so
 %{_libdir}/audacious/Input/xsf.so
 #
-%{_libdir}/audacious/Input/sexypsf.so
+#%{_libdir}/audacious/Input/sexypsf.so
 #
 %if %build_plf
 %_libdir/audacious/Input/aac.so
@@ -311,7 +314,7 @@ rm -rf %{buildroot}
 %{_libdir}/audacious/Visualization/blur_scope.so
 %{_libdir}/audacious/Visualization/paranormal.so
 %{_libdir}/audacious/Visualization/rocklight.so
-%{_libdir}/audacious/Visualization/rootvis.so
+#%{_libdir}/audacious/Visualization/rootvis.so
 %{_libdir}/audacious/Visualization/spectrum.so
 %_datadir/audacious
 
