@@ -2,7 +2,7 @@
 %define version 2.1
 %define svn 0
 %define pre 0
-%define rel 1
+%define rel 2
 %if %pre
 %if %svn
 %define release	%mkrel 0.%pre.%svn.%rel
@@ -68,6 +68,7 @@ BuildRequires:  libcddb-devel
 BuildRequires:  libcdio-devel
 BuildRequires:  libimlib2-devel
 BuildRequires:  libshout-devel
+BuildRequires:  libbs2b-devel
 Provides:	beep-media-player-libvisual beep-media-player-lirc audacious-modplug beep-media-player-scrobbler audacious-scrobbler
 Obsoletes:	beep-media-player-libvisual beep-media-player-lirc audacious-modplug beep-media-player-scrobbler audacious-scrobbler
 %if %build_plf
@@ -292,6 +293,7 @@ rm -rf %{buildroot}
 %endif
 %dir %{_libdir}/audacious/Effect/
 %{_libdir}/audacious/Effect/audiocompress.so
+%{_libdir}/audacious/Effect/bs2b.so
 %{_libdir}/audacious/Effect/crystalizer.so
 %{_libdir}/audacious/Effect/echo.so
 %{_libdir}/audacious/Effect/ladspa.so
