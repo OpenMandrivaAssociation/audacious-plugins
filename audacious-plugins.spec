@@ -1,8 +1,8 @@
 %define name audacious-plugins
-%define version 2.1
+%define version 2.2
 %define svn 0
-%define pre 0
-%define rel 3
+%define pre beta1
+%define rel 1
 %if %pre
 %if %svn
 %define release	%mkrel 0.%pre.%svn.%rel
@@ -20,7 +20,7 @@
 %if %build_plf
 %define distsuffix plf
 %endif
-%define audacious %epoch:2.1
+%define audacious %epoch:2.2
 
 Summary:	Audacious Media Player core plugins
 Name:		%name
@@ -28,9 +28,8 @@ Version:	%version
 Release:	%release
 Epoch:		5
 Source0:	http://audacious-media-player.org/release/%fname.tgz
-Patch: audacious-plugins-2.1-beta1-linking.patch
-Patch1: audacious-plugins-2.1-fix-build.patch
-Patch2: audacious-plugins-2.1-beta1-format-strings.patch
+Patch: audacious-plugins-2.2-beta1-linking.patch
+Patch2: audacious-plugins-2.2-beta1-format-strings.patch
 License:	GPLv2+
 Group:		Sound
 Url:		http://audacious-media-player.org/
@@ -51,7 +50,6 @@ BuildRequires:  libxcomposite-devel
 BuildRequires:  SDL-devel
 BuildRequires:  libsndfile-devel
 BuildRequires:  libjack-devel
-BuildRequires:  libmpcdec-devel
 BuildRequires:  taglib-devel
 BuildRequires:  libmad-devel
 BuildRequires:  libmusicbrainz-devel
@@ -69,6 +67,7 @@ BuildRequires:  libcdio-devel
 BuildRequires:  libimlib2-devel
 BuildRequires:  libshout-devel
 BuildRequires:  libbs2b-devel
+BuildRequires:  ffmpeg-devel
 Provides:	beep-media-player-libvisual beep-media-player-lirc audacious-modplug beep-media-player-scrobbler audacious-scrobbler
 Obsoletes:	beep-media-player-libvisual beep-media-player-lirc audacious-modplug beep-media-player-scrobbler audacious-scrobbler
 %if %build_plf
@@ -106,15 +105,17 @@ Epoch: %epoch
 %description  -n audacious-esd
 Output plugin for Audacious media player for use with the esound package
 
+%if 0
 %package  -n audacious-musepack
 Group: Sound
 Summary:  Musepack input plugin for Audacious
+BuildRequires:  libmpcdec-devel
 Requires: audacious
 Epoch: %epoch
 
 %description  -n audacious-musepack
 This is a Musepack input plugin for Audacious based on libmpcdec.
-
+%endif
 
 %package  -n audacious-wavpack
 Group: Sound
@@ -136,6 +137,7 @@ Audacious audio output plugin for the jack audio
 server(http://jackit.sourceforge.net).
 
 
+%if 0
 %package  -n audacious-pulse
 Group: Sound
 Summary:Audacious output plugin for the Pulseaudio sound server
@@ -146,6 +148,7 @@ BuildRequires: libpulseaudio-devel
 %description  -n audacious-pulse
 Audacious audio output plugin for the pulseaudio
 server.
+%endif
 
 %package  -n audacious-adplug
 Summary: AdLib player plugin for audacious
@@ -210,7 +213,6 @@ This adds Visualization support to Audacious, based on projectM.
 %setup -q -n %fname
 %endif
 %patch -p1 -b .linking
-%patch1 -p1
 %patch2 -p1 -b .format-strings
 %if %svn
 sh ./autogen.sh
@@ -267,12 +269,10 @@ rm -rf %{buildroot}
 %{_libdir}/audacious/General/song_change.so
 %{_libdir}/audacious/General/vfstrace.so
 %dir %{_libdir}/audacious/Input
-%{_libdir}/audacious/Input/alac.so
+%{_libdir}/audacious/Input/ffaudio.so
 %{_libdir}/audacious/Input/amidi-plug.so
 %{_libdir}/audacious/Input/cdaudio-ng.so
 %{_libdir}/audacious/Input/console.so
-%{_libdir}/audacious/Input/cuesheet_ng.so
-%{_libdir}/audacious/Input/demac.so
 %{_libdir}/audacious/Input/flacng.so
 %{_libdir}/audacious/Input/madplug.so
 %{_libdir}/audacious/Input/metronom.so
@@ -301,17 +301,17 @@ rm -rf %{buildroot}
 %{_libdir}/audacious/Effect/stereo.so
 %{_libdir}/audacious/Effect/voice_removal.so
 %dir %{_libdir}/audacious/Output
+%{_libdir}/audacious/Output/alsa-gapless.so
 %{_libdir}/audacious/Output/OSS.so
-%{_libdir}/audacious/Output/ALSA.so
 %{_libdir}/audacious/Output/crossfade.so
 %{_libdir}/audacious/Output/filewriter.so
 %{_libdir}/audacious/Output/icecast.so
 %{_libdir}/audacious/Output/null.so
 %dir %{_libdir}/audacious/Transport/
 %{_libdir}/audacious/Transport/gio.so
-%{_libdir}/audacious/Transport/lastfm.so
 %{_libdir}/audacious/Transport/mms.so
 %{_libdir}/audacious/Transport/neon.so
+%{_libdir}/audacious/Transport/unix-io.so
 %dir %{_libdir}/audacious/Visualization
 %{_libdir}/audacious/Visualization/blur_scope.so
 %{_libdir}/audacious/Visualization/paranormal.so
@@ -324,9 +324,11 @@ rm -rf %{buildroot}
 %defattr(0644,root,root,0755)
 %{_libdir}/audacious/Output/ESD.so
 
+%if 0
 %files  -n audacious-musepack
 %defattr(0644,root,root,0755)
 %{_libdir}/audacious/Input/musepack.so
+%endif
 
 %files  -n audacious-wavpack
 %defattr(0644,root,root,0755)
@@ -336,9 +338,11 @@ rm -rf %{buildroot}
 %defattr(0644,root,root,0755)
 %{_libdir}/audacious/Output/jackout.so
 
+%if 0
 %files  -n audacious-pulse
 %defattr(0644,root,root,0755)
 %{_libdir}/audacious/Output/pulse_audio.so
+%endif
 
 %files  -n audacious-sid
 %defattr(-,root,root)
