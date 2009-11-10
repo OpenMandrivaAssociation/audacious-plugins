@@ -76,6 +76,9 @@ BuildRequires: liblame-devel
 BuildRequires: libfaad2-static-devel
 Provides:beep-media-player-mp4 audacious-extra-plugins
 Obsoletes:beep-media-player-mp4 audacious-extra-plugins
+#gw ffmpeg plugin:
+Obsoletes: audacious-musepack
+Provides: audacious-musepack
 %endif
 #gw make sure the broken plugin is removed
 Obsoletes: audacious-timidity
@@ -106,18 +109,6 @@ Epoch: %epoch
 
 %description  -n audacious-esd
 Output plugin for Audacious media player for use with the esound package
-
-%if 0
-%package  -n audacious-musepack
-Group: Sound
-Summary:  Musepack input plugin for Audacious
-BuildRequires:  libmpcdec-devel
-Requires: audacious
-Epoch: %epoch
-
-%description  -n audacious-musepack
-This is a Musepack input plugin for Audacious based on libmpcdec.
-%endif
 
 %package  -n audacious-wavpack
 Group: Sound
@@ -318,12 +309,6 @@ rm -rf %{buildroot}
 %files  -n audacious-esd
 %defattr(0644,root,root,0755)
 %{_libdir}/audacious/Output/ESD.so
-
-%if 0
-%files  -n audacious-musepack
-%defattr(0644,root,root,0755)
-%{_libdir}/audacious/Input/musepack.so
-%endif
 
 %files  -n audacious-wavpack
 %defattr(0644,root,root,0755)
