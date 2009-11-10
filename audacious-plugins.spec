@@ -284,9 +284,6 @@ rm -rf %{buildroot}
 %{_libdir}/audacious/Input/vorbis.so
 %{_libdir}/audacious/Input/vtx.so
 %{_libdir}/audacious/Input/xsf.so
-#
-#%{_libdir}/audacious/Input/sexypsf.so
-#
 %if %build_plf
 %_libdir/audacious/Input/aac.so
 %endif
@@ -315,7 +312,6 @@ rm -rf %{buildroot}
 %{_libdir}/audacious/Visualization/blur_scope.so
 %{_libdir}/audacious/Visualization/paranormal.so
 %{_libdir}/audacious/Visualization/rocklight.so
-#%{_libdir}/audacious/Visualization/rootvis.so
 %{_libdir}/audacious/Visualization/spectrum.so
 %_datadir/audacious
 
