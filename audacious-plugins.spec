@@ -234,7 +234,7 @@ rm -rf %{buildroot}
 
 rm -f %buildroot%_includedir/mp4.h
 %if !%build_plf
-rm -fv %buildroot%_libdir/audacious/Input/wma.so
+rm -fv %buildroot%_libdir/audacious/Input/aac.so
 %endif
 
 %find_lang %name
@@ -289,7 +289,7 @@ rm -rf %{buildroot}
 #%{_libdir}/audacious/Input/sexypsf.so
 #
 %if %build_plf
-%_libdir/audacious/Input/wma.so
+%_libdir/audacious/Input/aac.so
 %endif
 %dir %{_libdir}/audacious/Effect/
 %{_libdir}/audacious/Effect/audiocompress.so
