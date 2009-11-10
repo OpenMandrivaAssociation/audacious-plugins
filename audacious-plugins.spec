@@ -232,7 +232,6 @@ sh ./autogen.sh
 rm -rf %{buildroot}
 %makeinstall_std
 
-rm -f %buildroot%_includedir/mp4.h
 %if !%build_plf
 rm -fv %buildroot%_libdir/audacious/Input/aac.so
 %endif
