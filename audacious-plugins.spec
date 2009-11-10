@@ -1,7 +1,7 @@
 %define name audacious-plugins
 %define version 2.2
 %define svn 0
-%define pre beta1
+%define pre beta2
 %define rel 1
 %if %pre
 %if %svn
@@ -28,8 +28,8 @@ Version:	%version
 Release:	%release
 Epoch:		5
 Source0:	http://audacious-media-player.org/release/%fname.tgz
-Patch: audacious-plugins-2.2-beta1-linking.patch
-Patch2: audacious-plugins-2.2-beta1-format-strings.patch
+Patch: audacious-plugins-2.2-beta2-linking.patch
+Patch2: audacious-plugins-2.2-beta2-format-strings.patch
 License:	GPLv2+
 Group:		Sound
 Url:		http://audacious-media-player.org/
@@ -68,10 +68,12 @@ BuildRequires:  libimlib2-devel
 BuildRequires:  libshout-devel
 BuildRequires:  libbs2b-devel
 BuildRequires:  ffmpeg-devel
+BuildRequires:  libcue-devel
 Provides:	beep-media-player-libvisual beep-media-player-lirc audacious-modplug beep-media-player-scrobbler audacious-scrobbler
 Obsoletes:	beep-media-player-libvisual beep-media-player-lirc audacious-modplug beep-media-player-scrobbler audacious-scrobbler
 %if %build_plf
 BuildRequires: liblame-devel
+BuildRequires: libfaad2-static-devel
 Provides:beep-media-player-mp4 audacious-extra-plugins
 Obsoletes:beep-media-player-mp4 audacious-extra-plugins
 %endif
@@ -137,7 +139,6 @@ Audacious audio output plugin for the jack audio
 server(http://jackit.sourceforge.net).
 
 
-%if 0
 %package  -n audacious-pulse
 Group: Sound
 Summary:Audacious output plugin for the Pulseaudio sound server
@@ -148,7 +149,6 @@ BuildRequires: libpulseaudio-devel
 %description  -n audacious-pulse
 Audacious audio output plugin for the pulseaudio
 server.
-%endif
 
 %package  -n audacious-adplug
 Summary: AdLib player plugin for audacious
@@ -219,6 +219,8 @@ sh ./autogen.sh
 %endif
 
 %build
+#gw else cdaudio does not build (2.2-beta2)
+%define _disable_ld_no_undefined 1
 %configure2_5x --enable-amidiplug  --disable-timidity \
 %ifarch %ix86
 --disable-sse2 \
@@ -232,7 +234,6 @@ rm -rf %{buildroot}
 
 rm -f %buildroot%_includedir/mp4.h
 %if !%build_plf
-rm -fv %buildroot%_libdir/audacious/Input/aac.so
 rm -fv %buildroot%_libdir/audacious/Input/wma.so
 %endif
 
@@ -249,6 +250,7 @@ rm -rf %{buildroot}
 %_libdir/audacious/Input/amidi-plug/ap-dummy.so
 %dir %{_libdir}/audacious
 %dir %{_libdir}/audacious/Container
+%{_libdir}/audacious/Container/cue.so
 %{_libdir}/audacious/Container/m3u.so
 %{_libdir}/audacious/Container/pls.so
 %{_libdir}/audacious/Container/xspf.so
@@ -280,7 +282,6 @@ rm -rf %{buildroot}
 %{_libdir}/audacious/Input/psf2.so
 %{_libdir}/audacious/Input/sndfile.so
 %{_libdir}/audacious/Input/tonegen.so
-%{_libdir}/audacious/Input/tta.so
 %{_libdir}/audacious/Input/vorbis.so
 %{_libdir}/audacious/Input/vtx.so
 %{_libdir}/audacious/Input/xsf.so
@@ -288,7 +289,6 @@ rm -rf %{buildroot}
 #%{_libdir}/audacious/Input/sexypsf.so
 #
 %if %build_plf
-%_libdir/audacious/Input/aac.so
 %_libdir/audacious/Input/wma.so
 %endif
 %dir %{_libdir}/audacious/Effect/
@@ -338,11 +338,9 @@ rm -rf %{buildroot}
 %defattr(0644,root,root,0755)
 %{_libdir}/audacious/Output/jackout.so
 
-%if 0
 %files  -n audacious-pulse
 %defattr(0644,root,root,0755)
 %{_libdir}/audacious/Output/pulse_audio.so
-%endif
 
 %files  -n audacious-sid
 %defattr(-,root,root)
