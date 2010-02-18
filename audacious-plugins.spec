@@ -2,7 +2,7 @@
 %define version 2.2
 %define svn 0
 %define pre 0
-%define rel 1
+%define rel 2
 %if %pre
 %if %svn
 %define release	%mkrel 0.%pre.%svn.%rel
@@ -29,6 +29,7 @@ Release:	%release
 Epoch:		5
 Source0:	http://audacious-media-player.org/release/%fname.tgz
 Patch: audacious-plugins-2.2-beta2-linking.patch
+Patch1: audacious-plugins-2.2-fix-jack-plugin-build.patch
 Patch2: audacious-plugins-2.2-beta2-format-strings.patch
 License:	GPLv2+
 Group:		Sound
@@ -203,8 +204,7 @@ This adds Visualization support to Audacious, based on projectM.
 %else
 %setup -q -n %fname
 %endif
-%patch -p1 -b .linking
-%patch2 -p1 -b .format-strings
+%apply_patches
 %if %svn
 sh ./autogen.sh
 %endif
