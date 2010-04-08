@@ -1,16 +1,11 @@
 %define name audacious-plugins
-%define version 2.2
-%define svn 0
+%define version 2.3
+%define snapshot 0
 %define pre 0
-%define rel 2
+%define rel 1
 %if %pre
-%if %svn
-%define release	%mkrel 0.%pre.%svn.%rel
-%define fname %name-%svn
-%else
-%define release		%mkrel 0.%pre.%rel
+%define release		%mkrel -c %pre %rel
 %define fname %name-%version-%pre
-%endif
 %else
 %define fname %name-%version
 %define release %mkrel %rel
@@ -20,7 +15,7 @@
 %if %build_plf
 %define distsuffix plf
 %endif
-%define audacious %epoch:2.2
+%define audacious %epoch:2.3
 
 Summary:	Audacious Media Player core plugins
 Name:		%name
@@ -28,9 +23,9 @@ Version:	%version
 Release:	%release
 Epoch:		5
 Source0:	http://audacious-media-player.org/release/%fname.tgz
-Patch: audacious-plugins-2.2-beta2-linking.patch
-Patch1: audacious-plugins-2.2-fix-jack-plugin-build.patch
-Patch2: audacious-plugins-2.2-beta2-format-strings.patch
+Patch0: audacious-plugins-cf740d37e431-fix-usf-memory-build.patch
+Patch1: audacious-plugins-2.3-beta2-linking.patch
+Patch2: audacious-plugins-2.3-alpha2-format-strings.patch
 License:	GPLv2+
 Group:		Sound
 Url:		http://audacious-media-player.org/
@@ -54,9 +49,11 @@ BuildRequires:  libjack-devel
 BuildRequires:  taglib-devel
 BuildRequires:  libmad-devel
 BuildRequires:  libmusicbrainz-devel
-BuildRequires:  bluez-devel
+#gw currently does not build
+#BuildRequires:  bluez-devel >= 2.22
 BuildRequires:  libbinio-devel
-BuildRequires:  libcurl-devel >= 7.9.7
+#gw scrobbler:
+#BuildRequires:  libcurl-devel >= 7.9.7
 BuildRequires:  libneon-devel >= 0.26
 BuildRequires:  libfluidsynth-devel
 BuildRequires:  libwavpack-devel
@@ -70,8 +67,8 @@ BuildRequires:  libshout-devel
 BuildRequires:  libbs2b-devel
 BuildRequires:  ffmpeg-devel
 BuildRequires:  libcue-devel
-Provides:	beep-media-player-libvisual beep-media-player-lirc audacious-modplug beep-media-player-scrobbler audacious-scrobbler
-Obsoletes:	beep-media-player-libvisual beep-media-player-lirc audacious-modplug beep-media-player-scrobbler audacious-scrobbler
+Provides:	beep-media-player-libvisual beep-media-player-lirc audacious-modplug
+Obsoletes:	beep-media-player-libvisual beep-media-player-lirc audacious-modplug
 %if %build_plf
 BuildRequires: liblame-devel
 BuildRequires: libfaad2-static-devel
@@ -199,22 +196,26 @@ Epoch: %epoch
 This adds Visualization support to Audacious, based on projectM.
 
 %prep
-%if %svn
-%setup -q -n %name
+%if !%snapshot
+%setup -q -n %name-%version
 %else
 %setup -q -n %fname
 %endif
 %apply_patches
-%if %svn
+%if %snapshot
 sh ./autogen.sh
 %endif
+autoconf
 
 %build
 #gw else cdaudio does not build (2.2-beta2)
-%define _disable_ld_no_undefined 1
-%configure2_5x --enable-amidiplug  --disable-timidity \
+#define _disable_ld_no_undefined 1
+%configure2_5x --enable-amidiplug \
 %ifarch %ix86
 --disable-sse2 \
+%endif
+%ifarch %ix86 x86_64
+--enable-usf
 %endif
 
 %make
@@ -237,7 +238,6 @@ rm -rf %{buildroot}
 %doc AUTHORS
 %dir %_libdir/audacious/Input/amidi-plug/
 %_libdir/audacious/Input/amidi-plug/ap-alsa.so
-%_libdir/audacious/Input/amidi-plug/ap-dummy.so
 %dir %{_libdir}/audacious
 %dir %{_libdir}/audacious/Container
 %{_libdir}/audacious/Container/cue.so
@@ -247,14 +247,15 @@ rm -rf %{buildroot}
 %dir %{_libdir}/audacious/General
 %{_libdir}/audacious/General/alarm.so
 %{_libdir}/audacious/General/aosd.so
-%{_libdir}/audacious/General/bluetooth.so
+#%{_libdir}/audacious/General/bluetooth.so
+%{_libdir}/audacious/General/cd-menu-items.so
 %{_libdir}/audacious/General/evdev-plug.so
 %{_libdir}/audacious/General/gnomeshortcuts.so
 %{_libdir}/audacious/General/gtkui.so
 %{_libdir}/audacious/General/hotkey.so
 %{_libdir}/audacious/General/lirc.so
 %{_libdir}/audacious/General/mtp_up.so
-%{_libdir}/audacious/General/scrobbler.so
+#%{_libdir}/audacious/General/scrobbler.so
 %{_libdir}/audacious/General/skins.so
 %{_libdir}/audacious/General/statusicon.so
 %{_libdir}/audacious/General/streambrowser.so
@@ -272,6 +273,9 @@ rm -rf %{buildroot}
 %{_libdir}/audacious/Input/psf2.so
 %{_libdir}/audacious/Input/sndfile.so
 %{_libdir}/audacious/Input/tonegen.so
+%ifarch %ix86 x86_64
+%{_libdir}/audacious/Input/usf.so
+%endif
 %{_libdir}/audacious/Input/vorbis.so
 %{_libdir}/audacious/Input/vtx.so
 %{_libdir}/audacious/Input/xsf.so
@@ -279,17 +283,18 @@ rm -rf %{buildroot}
 %_libdir/audacious/Input/aac.so
 %endif
 %dir %{_libdir}/audacious/Effect/
-%{_libdir}/audacious/Effect/audiocompress.so
 %{_libdir}/audacious/Effect/bs2b.so
+%{_libdir}/audacious/Effect/compressor.so
 %{_libdir}/audacious/Effect/crystalizer.so
 %{_libdir}/audacious/Effect/echo.so
 %{_libdir}/audacious/Effect/ladspa.so
+%{_libdir}/audacious/Effect/resample.so
 %{_libdir}/audacious/Effect/sndstretch.so
 %{_libdir}/audacious/Effect/stereo.so
 %{_libdir}/audacious/Effect/voice_removal.so
 %dir %{_libdir}/audacious/Output
-%{_libdir}/audacious/Output/alsa-gapless.so
 %{_libdir}/audacious/Output/OSS.so
+%{_libdir}/audacious/Output/alsa.so
 %{_libdir}/audacious/Output/crossfade.so
 %{_libdir}/audacious/Output/filewriter.so
 %{_libdir}/audacious/Output/icecast.so
