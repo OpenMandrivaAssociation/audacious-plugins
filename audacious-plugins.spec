@@ -1,7 +1,7 @@
 %define name audacious-plugins
-%define version 2.3
+%define version 2.4
 %define snapshot 0
-%define pre 0
+%define pre beta1
 %define rel 1
 %if %pre
 %define release		%mkrel -c %pre %rel
@@ -15,7 +15,7 @@
 %if %build_plf
 %define distsuffix plf
 %endif
-%define audacious %epoch:2.3
+%define audacious %epoch:2.4
 
 Summary:	Audacious Media Player core plugins
 Name:		%name
@@ -24,7 +24,7 @@ Release:	%release
 Epoch:		5
 Source0:	http://audacious-media-player.org/release/%fname.tgz
 Patch0: audacious-plugins-cf740d37e431-fix-usf-memory-build.patch
-Patch1: audacious-plugins-2.3-beta2-linking.patch
+Patch1: audacious-plugins-2.4-alpha3-linking.patch
 Patch2: audacious-plugins-2.3-alpha2-format-strings.patch
 License:	GPLv2+
 Group:		Sound
@@ -49,11 +49,12 @@ BuildRequires:  libjack-devel
 BuildRequires:  taglib-devel
 BuildRequires:  libmad-devel
 BuildRequires:  libmusicbrainz-devel
+BuildRequires:  libnotify-devel
 #gw currently does not build
 #BuildRequires:  bluez-devel >= 2.22
 BuildRequires:  libbinio-devel
-#gw scrobbler:
-#BuildRequires:  libcurl-devel >= 7.9.7
+#gw scrobbler and curl:
+BuildRequires:  libcurl-devel >= 7.9.7
 BuildRequires:  libneon-devel >= 0.26
 BuildRequires:  libfluidsynth-devel
 BuildRequires:  libwavpack-devel
@@ -82,7 +83,7 @@ Provides: audacious-musepack
 Obsoletes: audacious-timidity
 #gw 2.0.0 has its own crossfader and the old one does not build anymore
 Provides: audacious-crossfade
-Obsoletes: audacious-crossfade
+Obsoletes: audacious-crossfade         
 
 %description
 Audacious is a media player based on the BMP music playing application.
@@ -94,19 +95,6 @@ without them.
 %if %build_plf
 This package is in PLF as it violates some patents.
 %endif
-
-%package -n audacious-esd
-Summary:	ESound output backend
-Group:		Sound
-BuildRequires:	esound-devel
-Requires:	audacious
-Requires:	esound >= 0.2.14
-Provides: beep-media-player-esd
-Obsoletes: beep-media-player-esd
-Epoch: %epoch
-
-%description  -n audacious-esd
-Output plugin for Audacious media player for use with the esound package
 
 %package  -n audacious-wavpack
 Group: Sound
@@ -133,6 +121,8 @@ Group: Sound
 Summary:Audacious output plugin for the Pulseaudio sound server
 Epoch: %epoch
 Requires: audacious
+Provides: audacious-esd
+Obsoletes: audacious-esd
 BuildRequires: libpulseaudio-devel
 
 %description  -n audacious-pulse
@@ -197,7 +187,7 @@ This adds Visualization support to Audacious, based on projectM.
 
 %prep
 %if !%snapshot
-%setup -q -n %name-%version
+%setup -q -n %fname
 %else
 %setup -q -n %fname
 %endif
@@ -214,8 +204,9 @@ autoconf
 %ifarch %ix86
 --disable-sse2 \
 %endif
+--enable-scrobbler
 %ifarch %ix86 x86_64
---enable-usf
+#--enable-usf
 %endif
 
 %make
@@ -254,13 +245,14 @@ rm -rf %{buildroot}
 %{_libdir}/audacious/General/gtkui.so
 %{_libdir}/audacious/General/hotkey.so
 %{_libdir}/audacious/General/lirc.so
+%{_libdir}/audacious/General/lyricwiki.so
 %{_libdir}/audacious/General/mtp_up.so
-#%{_libdir}/audacious/General/scrobbler.so
+%{_libdir}/audacious/General/notify.so
+%{_libdir}/audacious/General/scrobbler.so
 %{_libdir}/audacious/General/skins.so
 %{_libdir}/audacious/General/statusicon.so
 %{_libdir}/audacious/General/streambrowser.so
 %{_libdir}/audacious/General/song_change.so
-%{_libdir}/audacious/General/vfstrace.so
 %dir %{_libdir}/audacious/Input
 %{_libdir}/audacious/Input/ffaudio.so
 %{_libdir}/audacious/Input/amidi-plug.so
@@ -274,7 +266,7 @@ rm -rf %{buildroot}
 %{_libdir}/audacious/Input/sndfile.so
 %{_libdir}/audacious/Input/tonegen.so
 %ifarch %ix86 x86_64
-%{_libdir}/audacious/Input/usf.so
+#%{_libdir}/audacious/Input/usf.so
 %endif
 %{_libdir}/audacious/Input/vorbis.so
 %{_libdir}/audacious/Input/vtx.so
@@ -285,6 +277,7 @@ rm -rf %{buildroot}
 %dir %{_libdir}/audacious/Effect/
 %{_libdir}/audacious/Effect/bs2b.so
 %{_libdir}/audacious/Effect/compressor.so
+%{_libdir}/audacious/Effect/crossfade.so
 %{_libdir}/audacious/Effect/crystalizer.so
 %{_libdir}/audacious/Effect/echo.so
 %{_libdir}/audacious/Effect/ladspa.so
@@ -295,9 +288,8 @@ rm -rf %{buildroot}
 %dir %{_libdir}/audacious/Output
 %{_libdir}/audacious/Output/OSS.so
 %{_libdir}/audacious/Output/alsa.so
-%{_libdir}/audacious/Output/crossfade.so
 %{_libdir}/audacious/Output/filewriter.so
-%{_libdir}/audacious/Output/icecast.so
+#%{_libdir}/audacious/Output/icecast.so
 %{_libdir}/audacious/Output/null.so
 %dir %{_libdir}/audacious/Transport/
 %{_libdir}/audacious/Transport/gio.so
@@ -310,10 +302,6 @@ rm -rf %{buildroot}
 %{_libdir}/audacious/Visualization/rocklight.so
 %{_libdir}/audacious/Visualization/spectrum.so
 %_datadir/audacious
-
-%files  -n audacious-esd
-%defattr(0644,root,root,0755)
-%{_libdir}/audacious/Output/ESD.so
 
 %files  -n audacious-wavpack
 %defattr(0644,root,root,0755)
