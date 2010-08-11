@@ -195,7 +195,6 @@ This adds Visualization support to Audacious, based on projectM.
 %if %snapshot
 sh ./autogen.sh
 %endif
-autoconf
 
 %build
 #gw else cdaudio does not build (2.2-beta2)
