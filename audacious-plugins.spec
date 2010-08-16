@@ -1,7 +1,7 @@
 %define name audacious-plugins
 %define version 2.4
 %define snapshot 0
-%define pre rc1
+%define pre rc2
 %define rel 1
 %if %pre
 %define release		%mkrel -c %pre %rel
