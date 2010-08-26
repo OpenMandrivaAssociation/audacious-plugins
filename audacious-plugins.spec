@@ -1,7 +1,7 @@
 %define name audacious-plugins
-%define version 2.4
+%define version 2.4.0
 %define snapshot 0
-%define pre rc2
+%define pre 0
 %define rel 1
 %if %pre
 %define release		%mkrel -c %pre %rel
@@ -15,7 +15,7 @@
 %if %build_plf
 %define distsuffix plf
 %endif
-%define audacious %epoch:2.4
+%define audacious %epoch:2.4.0
 
 Summary:	Audacious Media Player core plugins
 Name:		%name
@@ -25,7 +25,7 @@ Epoch:		5
 Source0:	http://audacious-media-player.org/release/%fname.tgz
 Patch0: audacious-plugins-cf740d37e431-fix-usf-memory-build.patch
 Patch1: audacious-plugins-2.4-rc1-linking.patch
-Patch2: audacious-plugins-2.3-alpha2-format-strings.patch
+Patch2: audacious-plugins-2.4.0-format-strings.patch
 License:	GPLv2+
 Group:		Sound
 Url:		http://audacious-media-player.org/
