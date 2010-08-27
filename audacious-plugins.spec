@@ -99,7 +99,7 @@ This package is in PLF as it violates some patents.
 %package  -n audacious-wavpack
 Group: Sound
 Summary:  Wavpack input plugin for Audacious
-Requires: audacious
+Requires:	audacious >= %audacious
 Epoch: %epoch
 
 %description  -n audacious-wavpack
@@ -109,7 +109,7 @@ This is a wavpack input plugin for Audacious based on libwavpack.
 Group: Sound
 Summary:Audacious output plugin for the jack sound server
 Epoch: %epoch
-Requires: audacious
+Requires:	audacious >= %audacious
 
 %description  -n audacious-jack
 Audacious audio output plugin for the jack audio
@@ -120,7 +120,7 @@ server(http://jackit.sourceforge.net).
 Group: Sound
 Summary:Audacious output plugin for the Pulseaudio sound server
 Epoch: %epoch
-Requires: audacious
+Requires: audacious >= %audacious
 Provides: audacious-esd
 Obsoletes: audacious-esd
 BuildRequires: libpulseaudio-devel
@@ -132,7 +132,7 @@ server.
 %package  -n audacious-adplug
 Summary: AdLib player plugin for audacious
 Group: Sound
-Requires: audacious
+Requires: audacious >= %audacious
 Epoch: %epoch
 
 %description  -n audacious-adplug
@@ -145,7 +145,7 @@ playback.
 %package  -n audacious-fluidsynth
 Summary: Fluidsynth MIDI plugin for audacious
 Group: Sound
-Requires: audacious
+Requires: audacious >= %audacious
 Epoch: %epoch
 
 %description  -n audacious-fluidsynth
@@ -164,7 +164,7 @@ BuildRequires: sidplay2-devel
 Provides: beep-media-player-sid
 Obsoletes: beep-media-player-sid
 Epoch: %epoch
-Requires: audacious
+Requires: audacious >= %audacious
 
 %description  -n audacious-sid
 Audacious-SID is a plugin for the Audacious Media Player which provides
@@ -179,7 +179,7 @@ Device (SID) chip.
 %package  -n audacious-projectm
 Group: Sound
 Summary: Visualization for Audacious, based on projectM
-Requires: audacious
+Requires: audacious >= %audacious
 Epoch: %epoch
 
 %description  -n audacious-projectm
