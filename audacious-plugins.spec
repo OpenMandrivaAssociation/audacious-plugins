@@ -1,5 +1,5 @@
 %define name audacious-plugins
-%define version 2.4.2
+%define version 2.4.3
 %define snapshot 0
 %define pre 0
 %define rel 1
@@ -15,7 +15,7 @@
 %if %build_plf
 %define distsuffix plf
 %endif
-%define audacious %epoch:2.4.2
+%define audacious %epoch:2.4.3
 
 Summary:	Audacious Media Player core plugins
 Name:		%name
