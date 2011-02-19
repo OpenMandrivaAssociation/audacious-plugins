@@ -14,13 +14,17 @@
 %{?_with_plf: %{expand: %%global build_plf 1}}
 %if %build_plf
 %define distsuffix plf
+%if %mdvver >= 201100
+# make EVR of plf build higher than regular to allow update, needed with rpm5 mkrel
+%define extrarelsuffix plf
+%endif
 %endif
 %define audacious %epoch:2.4.3
 
 Summary:	Audacious Media Player core plugins
 Name:		%name
 Version:	%version
-Release:	%release
+Release:	%release%{?extrarelsuffix}
 Epoch:		5
 Source0:	http://distfiles.atheme.org/%fname.tgz
 Patch0: audacious-plugins-cf740d37e431-fix-usf-memory-build.patch
