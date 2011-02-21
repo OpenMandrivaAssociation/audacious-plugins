@@ -2,13 +2,22 @@
 %define version 2.4.3
 %define snapshot 0
 %define pre 0
-%define rel 1
+%define rel 2
+%define build_plf 0
+%{?_with_plf: %{expand: %%global build_plf 1}}
+%if %build_plf
+%if %mdvver >= 201100
+%define extrarelsuffix plf
+%else
+%define distsuffix plf
+%endif
+%endif
 %if %pre
-%define release		%mkrel -c %pre %rel
+%define release		%mkrel -c %pre %rel%{?extrarelsuffix}
 %define fname %name-%version-%pre
 %else
 %define fname %name-%version
-%define release %mkrel %rel
+%define release %mkrel %rel%{?extrarelsuffix}
 %endif
 %define build_plf 0
 %{?_with_plf: %{expand: %%global build_plf 1}}
