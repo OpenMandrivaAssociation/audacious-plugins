@@ -1,8 +1,8 @@
 %define name audacious-plugins
-%define version 2.4.3
+%define version 2.4.4
 %define snapshot 0
 %define pre 0
-%define rel 3
+%define rel 1
 %define build_plf 0
 %{?_with_plf: %{expand: %%global build_plf 1}}
 %if %build_plf
@@ -38,7 +38,6 @@ Epoch:		5
 Source0:	http://distfiles.atheme.org/%fname.tgz
 Patch0: audacious-plugins-cf740d37e431-fix-usf-memory-build.patch
 Patch1: audacious-plugins-2.4-rc1-linking.patch
-Patch2: audacious-plugins-2.4.0-format-strings.patch
 License:	GPLv2+
 Group:		Sound
 Url:		http://audacious-media-player.org/
