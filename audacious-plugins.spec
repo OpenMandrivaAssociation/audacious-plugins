@@ -2,7 +2,7 @@
 %define version 2.4.4
 %define snapshot 0
 %define pre 0
-%define rel 1
+%define rel 2
 %define build_plf 0
 %{?_with_plf: %{expand: %%global build_plf 1}}
 %if %build_plf
