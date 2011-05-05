@@ -1,8 +1,8 @@
 %define name audacious-plugins
-%define version 2.4.4
+%define version 2.5.0
 %define snapshot 0
 %define pre 0
-%define rel 2
+%define rel 1
 %define build_plf 0
 %{?_with_plf: %{expand: %%global build_plf 1}}
 %if %build_plf
@@ -28,7 +28,7 @@
 %define extrarelsuffix plf
 %endif
 %endif
-%define audacious %epoch:2.4.3
+%define audacious %epoch:2.5.0
 
 Summary:	Audacious Media Player core plugins
 Name:		%name
@@ -242,12 +242,14 @@ rm -rf %{buildroot}
 %_libdir/audacious/Input/amidi-plug/ap-alsa.so
 %dir %{_libdir}/audacious
 %dir %{_libdir}/audacious/Container
+%{_libdir}/audacious/Container/asx.so
 %{_libdir}/audacious/Container/cue.so
 %{_libdir}/audacious/Container/m3u.so
 %{_libdir}/audacious/Container/pls.so
 %{_libdir}/audacious/Container/xspf.so
 %dir %{_libdir}/audacious/General
 %{_libdir}/audacious/General/alarm.so
+%{_libdir}/audacious/General/albumart.so
 %{_libdir}/audacious/General/aosd.so
 #%{_libdir}/audacious/General/bluetooth.so
 %{_libdir}/audacious/General/cd-menu-items.so
@@ -292,6 +294,7 @@ rm -rf %{buildroot}
 %{_libdir}/audacious/Effect/crystalizer.so
 %{_libdir}/audacious/Effect/echo.so
 %{_libdir}/audacious/Effect/ladspa.so
+%{_libdir}/audacious/Effect/mixdown.so
 %{_libdir}/audacious/Effect/resample.so
 %{_libdir}/audacious/Effect/sndstretch.so
 %{_libdir}/audacious/Effect/stereo.so
@@ -300,8 +303,8 @@ rm -rf %{buildroot}
 %{_libdir}/audacious/Output/OSS.so
 %{_libdir}/audacious/Output/alsa.so
 %{_libdir}/audacious/Output/filewriter.so
-#%{_libdir}/audacious/Output/icecast.so
 %{_libdir}/audacious/Output/null.so
+%{_libdir}/audacious/Output/sdlout.so
 %dir %{_libdir}/audacious/Transport/
 %{_libdir}/audacious/Transport/gio.so
 %{_libdir}/audacious/Transport/mms.so
@@ -309,6 +312,8 @@ rm -rf %{buildroot}
 %{_libdir}/audacious/Transport/unix-io.so
 %dir %{_libdir}/audacious/Visualization
 %{_libdir}/audacious/Visualization/blur_scope.so
+%{_libdir}/audacious/Visualization/cairo-spectrum.so
+%{_libdir}/audacious/Visualization/moodbar.so
 %{_libdir}/audacious/Visualization/paranormal.so
 %{_libdir}/audacious/Visualization/rocklight.so
 %{_libdir}/audacious/Visualization/spectrum.so
