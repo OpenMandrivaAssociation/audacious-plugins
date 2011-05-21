@@ -1,5 +1,5 @@
 %define name audacious-plugins
-%define version 2.5.0
+%define version 2.5.1
 %define snapshot 0
 %define pre 0
 %define rel 1
