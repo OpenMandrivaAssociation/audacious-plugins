@@ -1,5 +1,5 @@
 %define name audacious-plugins
-%define version 2.5.4
+%define version 3.0
 %define snapshot 0
 %define pre 0
 %define rel 1
@@ -28,7 +28,7 @@
 %define extrarelsuffix plf
 %endif
 %endif
-%define audacious %epoch:2.5.0
+%define audacious %epoch:3
 
 Summary:	Audacious Media Player core plugins
 Name:		%name
@@ -37,7 +37,9 @@ Release:	%release%{?extrarelsuffix}
 Epoch:		5
 Source0:	http://distfiles.atheme.org/%fname.tar.bz2
 Patch0: audacious-plugins-cf740d37e431-fix-usf-memory-build.patch
-Patch1: audacious-plugins-2.4-rc1-linking.patch
+Patch1: audacious-plugins-3.0-alpha1-linking.patch
+#gw from Fedora, enable gnome keys by default
+Patch2: audacious-plugins-3.0-alpha1-enable-gnomeshortcuts.patch
 License:	GPLv2+
 Group:		Sound
 Url:		http://audacious-media-player.org/
@@ -53,11 +55,14 @@ BuildRequires:	libmodplug-devel
 BuildRequires:	libmms-devel
 BuildRequires:  liblirc-devel
 BuildRequires:	gtk2-devel >= 2.6.0
+#BuildRequires:	gtk+3-devel
 BuildRequires:  libmesaglut-devel
 BuildRequires:  libxcomposite-devel
 BuildRequires:  SDL-devel
 BuildRequires:  libsndfile-devel
-BuildRequires:  libjack-devel
+%if %mdvver >= 201100
+BuildRequires:  libjack-devel >= 1.9.7
+%endif
 BuildRequires:  taglib-devel
 BuildRequires:  libmad-devel
 BuildRequires:  libmusicbrainz-devel
@@ -70,7 +75,6 @@ BuildRequires:  libcurl-devel >= 7.9.7
 BuildRequires:  libneon-devel >= 0.26
 BuildRequires:  libfluidsynth-devel
 BuildRequires:  libwavpack-devel
-BuildRequires:  libprojectm-devel >= 1:1.1 gtkglext-devel >= 1.2.0
 BuildRequires:  libmtp-devel >= 0.3.0
 BuildRequires:  libflac-devel
 BuildRequires:  libcddb-devel
@@ -78,8 +82,11 @@ BuildRequires:  libcdio-devel
 BuildRequires:  libimlib2-devel
 BuildRequires:  libshout-devel
 BuildRequires:  libbs2b-devel
-BuildRequires:  ffmpeg-devel
+%if %mdvver >= 201100
+BuildRequires:  pkgconfig(libavcodec) >= 52.110.0
+%endif
 BuildRequires:  libcue-devel
+BuildRequires:  libmpg123-devel
 Provides:	beep-media-player-libvisual beep-media-player-lirc audacious-modplug
 Obsoletes:	beep-media-player-libvisual beep-media-player-lirc audacious-modplug
 %if %build_plf
@@ -117,6 +124,7 @@ Epoch: %epoch
 %description  -n audacious-wavpack
 This is a wavpack input plugin for Audacious based on libwavpack.
 
+%if %mdvver >= 201100
 %package  -n audacious-jack
 Group: Sound
 Summary:Audacious output plugin for the jack sound server
@@ -126,7 +134,7 @@ Requires:	audacious >= %audacious
 %description  -n audacious-jack
 Audacious audio output plugin for the jack audio
 server(http://jackit.sourceforge.net).
-
+%endif
 
 %package  -n audacious-pulse
 Group: Sound
@@ -187,16 +195,6 @@ For the actual playing, it uses the excellent libsidplay (1|2)
 emulator engine that emulates 6510 CPU and 6581/8580 Sound Interface
 Device (SID) chip.
 
-
-%package  -n audacious-projectm
-Group: Sound
-Summary: Visualization for Audacious, based on projectM
-Requires: audacious >= %audacious
-Epoch: %epoch
-
-%description  -n audacious-projectm
-This adds Visualization support to Audacious, based on projectM.
-
 %prep
 %if !%snapshot
 %setup -q -n %fname
@@ -215,7 +213,7 @@ sh ./autogen.sh
 %ifarch %ix86
 --disable-sse2 \
 %endif
---enable-scrobbler
+--enable-scrobbler --disable-gtk3
 %ifarch %ix86 x86_64
 #--enable-usf
 %endif
@@ -248,26 +246,24 @@ rm -rf %{buildroot}
 %{_libdir}/audacious/Container/pls.so
 %{_libdir}/audacious/Container/xspf.so
 %dir %{_libdir}/audacious/General
-%{_libdir}/audacious/General/alarm.so
 %{_libdir}/audacious/General/albumart.so
 %{_libdir}/audacious/General/aosd.so
 #%{_libdir}/audacious/General/bluetooth.so
 %{_libdir}/audacious/General/cd-menu-items.so
-%{_libdir}/audacious/General/evdev-plug.so
 %{_libdir}/audacious/General/gnomeshortcuts.so
 %{_libdir}/audacious/General/gtkui.so
 %{_libdir}/audacious/General/hotkey.so
-%{_libdir}/audacious/General/lirc.so
 %{_libdir}/audacious/General/lyricwiki.so
 %{_libdir}/audacious/General/mtp_up.so
 %{_libdir}/audacious/General/notify.so
 %{_libdir}/audacious/General/scrobbler.so
 %{_libdir}/audacious/General/skins.so
 %{_libdir}/audacious/General/statusicon.so
-%{_libdir}/audacious/General/streambrowser.so
 %{_libdir}/audacious/General/song_change.so
 %dir %{_libdir}/audacious/Input
+%if %mdvver >= 201100
 %{_libdir}/audacious/Input/ffaudio.so
+%endif
 %{_libdir}/audacious/Input/amidi-plug.so
 %{_libdir}/audacious/Input/cdaudio-ng.so
 %{_libdir}/audacious/Input/console.so
@@ -293,7 +289,6 @@ rm -rf %{buildroot}
 %{_libdir}/audacious/Effect/crossfade.so
 %{_libdir}/audacious/Effect/crystalizer.so
 %{_libdir}/audacious/Effect/echo.so
-%{_libdir}/audacious/Effect/ladspa.so
 %{_libdir}/audacious/Effect/mixdown.so
 %{_libdir}/audacious/Effect/resample.so
 %{_libdir}/audacious/Effect/sndstretch.so
@@ -306,7 +301,7 @@ rm -rf %{buildroot}
 %{_libdir}/audacious/Output/null.so
 %{_libdir}/audacious/Output/sdlout.so
 %dir %{_libdir}/audacious/Transport/
-%{_libdir}/audacious/Transport/gio.so
+#%{_libdir}/audacious/Transport/gio.so
 %{_libdir}/audacious/Transport/mms.so
 %{_libdir}/audacious/Transport/neon.so
 %{_libdir}/audacious/Transport/unix-io.so
@@ -314,18 +309,18 @@ rm -rf %{buildroot}
 %{_libdir}/audacious/Visualization/blur_scope.so
 %{_libdir}/audacious/Visualization/cairo-spectrum.so
 %{_libdir}/audacious/Visualization/moodbar.so
-%{_libdir}/audacious/Visualization/paranormal.so
 %{_libdir}/audacious/Visualization/rocklight.so
-%{_libdir}/audacious/Visualization/spectrum.so
 %_datadir/audacious
 
 %files  -n audacious-wavpack
 %defattr(0644,root,root,0755)
 %{_libdir}/audacious/Input/wavpack.so
 
+%if %mdvver >= 201100
 %files  -n audacious-jack
 %defattr(0644,root,root,0755)
 %{_libdir}/audacious/Output/jackout.so
+%endif
 
 %files  -n audacious-pulse
 %defattr(0644,root,root,0755)
@@ -348,7 +343,3 @@ rm -rf %{buildroot}
 %files  -n audacious-fluidsynth
 %defattr(0644,root,root,0755)
 %_libdir/audacious/Input/amidi-plug/ap-fluidsynth.so
-
-%files  -n audacious-projectm
-%defattr(-,root,root)
-%{_libdir}/audacious/Visualization/projectm-1.0.so
