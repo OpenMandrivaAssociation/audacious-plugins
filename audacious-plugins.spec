@@ -92,13 +92,13 @@ Obsoletes:	beep-media-player-libvisual beep-media-player-lirc audacious-modplug
 %if %build_plf
 BuildRequires: liblame-devel
 BuildRequires: libfaad2-static-devel
-BuildRequires: libsmbclient-devel
 Provides:beep-media-player-mp4 audacious-extra-plugins
 Obsoletes:beep-media-player-mp4 audacious-extra-plugins
 #gw ffmpeg plugin:
 Obsoletes: audacious-musepack
 Provides: audacious-musepack
 %endif
+BuildRequires: libsmbclient-devel
 #gw make sure the broken plugin is removed
 Obsoletes: audacious-timidity
 #gw 2.0.0 has its own crossfader and the old one does not build anymore
