@@ -2,7 +2,7 @@
 %define version 3.0
 %define snapshot 0
 %define pre 0
-%define rel 1
+%define rel 2
 %define build_plf 0
 %{?_with_plf: %{expand: %%global build_plf 1}}
 %if %build_plf
@@ -92,6 +92,7 @@ Obsoletes:	beep-media-player-libvisual beep-media-player-lirc audacious-modplug
 %if %build_plf
 BuildRequires: liblame-devel
 BuildRequires: libfaad2-static-devel
+BuildRequires: libsmbclient-devel
 Provides:beep-media-player-mp4 audacious-extra-plugins
 Obsoletes:beep-media-player-mp4 audacious-extra-plugins
 #gw ffmpeg plugin:
@@ -194,6 +195,16 @@ from old Commodore computer programs like games, demos, etc.
 For the actual playing, it uses the excellent libsidplay (1|2)
 emulator engine that emulates 6510 CPU and 6581/8580 Sound Interface
 Device (SID) chip.
+
+%package -n audacious-smb
+Group: Sound
+Summary: SMB/CIFS file system plugin for the Audacious media player
+Epoch: %epoch
+Requires: audacious >= %audacious
+
+%description -n audacious-smb
+This plugin allows Audacious to play content from a Samba or Windows network
+file system.
 
 %prep
 %if !%snapshot
@@ -343,3 +354,7 @@ rm -rf %{buildroot}
 %files  -n audacious-fluidsynth
 %defattr(0644,root,root,0755)
 %_libdir/audacious/Input/amidi-plug/ap-fluidsynth.so
+
+%files -n audacious-smb
+%defattr(-,root,root)
+%_libdir/audacious/Transport/smb.so
