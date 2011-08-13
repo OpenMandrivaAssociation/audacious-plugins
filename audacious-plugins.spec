@@ -1,8 +1,8 @@
 %define name audacious-plugins
-%define version 3.0
+%define version 3.0.1
 %define snapshot 0
 %define pre 0
-%define rel 2
+%define rel 1
 %define build_plf 0
 %{?_with_plf: %{expand: %%global build_plf 1}}
 %if %build_plf
