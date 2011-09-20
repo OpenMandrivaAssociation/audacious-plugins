@@ -1,5 +1,5 @@
 %define name audacious-plugins
-%define version 3.0.2
+%define version 3.0.3
 %define snapshot 0
 %define pre 0
 %define rel 1
@@ -37,7 +37,7 @@ Release:	%release%{?extrarelsuffix}
 Epoch:		5
 Source0:	http://distfiles.atheme.org/%fname.tar.bz2
 Patch0: audacious-plugins-cf740d37e431-fix-usf-memory-build.patch
-Patch1: audacious-plugins-3.0-alpha1-linking.patch
+Patch1: audacious-plugins-3.0.3-linking.patch
 #gw from Fedora, enable gnome keys by default
 Patch2: audacious-plugins-3.0-alpha1-enable-gnomeshortcuts.patch
 License:	GPLv2+
