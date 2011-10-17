@@ -1,7 +1,7 @@
 %define name audacious-plugins
-%define version 3.0.3
+%define version 3.1
 %define snapshot 0
-%define pre 0
+%define pre beta2
 %define rel 1
 %define build_plf 0
 %{?_with_plf: %{expand: %%global build_plf 1}}
@@ -28,7 +28,7 @@
 %define extrarelsuffix plf
 %endif
 %endif
-%define audacious %epoch:3
+%define audacious %epoch:3.1
 
 Summary:	Audacious Media Player core plugins
 Name:		%name
@@ -36,8 +36,7 @@ Version:	%version
 Release:	%release%{?extrarelsuffix}
 Epoch:		5
 Source0:	http://distfiles.atheme.org/%fname.tar.bz2
-Patch0: audacious-plugins-cf740d37e431-fix-usf-memory-build.patch
-Patch1: audacious-plugins-3.0.3-linking.patch
+Patch1: audacious-plugins-3.1-beta2-linking.patch
 #gw from Fedora, enable gnome keys by default
 Patch2: audacious-plugins-3.0-alpha1-enable-gnomeshortcuts.patch
 License:	GPLv2+
@@ -220,7 +219,7 @@ sh ./autogen.sh
 %build
 #gw else cdaudio does not build (2.2-beta2)
 #define _disable_ld_no_undefined 1
-%configure2_5x --enable-amidiplug \
+%configure2_5x --enable-amidiplug --enable-smb \
 %ifarch %ix86
 --disable-sse2 \
 %endif
@@ -257,6 +256,7 @@ rm -rf %{buildroot}
 %{_libdir}/audacious/Container/pls.so
 %{_libdir}/audacious/Container/xspf.so
 %dir %{_libdir}/audacious/General
+%{_libdir}/audacious/General/alarm.so
 %{_libdir}/audacious/General/albumart.so
 %{_libdir}/audacious/General/aosd.so
 #%{_libdir}/audacious/General/bluetooth.so
@@ -300,13 +300,14 @@ rm -rf %{buildroot}
 %{_libdir}/audacious/Effect/crossfade.so
 %{_libdir}/audacious/Effect/crystalizer.so
 %{_libdir}/audacious/Effect/echo.so
-%{_libdir}/audacious/Effect/mixdown.so
+%{_libdir}/audacious/Effect/ladspa.so
+%{_libdir}/audacious/Effect/mixer.so
 %{_libdir}/audacious/Effect/resample.so
 %{_libdir}/audacious/Effect/sndstretch.so
 %{_libdir}/audacious/Effect/stereo.so
 %{_libdir}/audacious/Effect/voice_removal.so
 %dir %{_libdir}/audacious/Output
-%{_libdir}/audacious/Output/OSS.so
+#%{_libdir}/audacious/Output/OSS.so
 %{_libdir}/audacious/Output/alsa.so
 %{_libdir}/audacious/Output/filewriter.so
 %{_libdir}/audacious/Output/null.so
@@ -319,8 +320,6 @@ rm -rf %{buildroot}
 %dir %{_libdir}/audacious/Visualization
 %{_libdir}/audacious/Visualization/blur_scope.so
 %{_libdir}/audacious/Visualization/cairo-spectrum.so
-%{_libdir}/audacious/Visualization/moodbar.so
-%{_libdir}/audacious/Visualization/rocklight.so
 %_datadir/audacious
 
 %files  -n audacious-wavpack
