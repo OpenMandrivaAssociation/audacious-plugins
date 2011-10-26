@@ -1,7 +1,7 @@
 %define name audacious-plugins
 %define version 3.1
 %define snapshot 0
-%define pre beta2
+%define pre beta3
 %define rel 1
 %define build_plf 0
 %{?_with_plf: %{expand: %%global build_plf 1}}
@@ -28,7 +28,7 @@
 %define extrarelsuffix plf
 %endif
 %endif
-%define audacious %epoch:3.1
+%define audacious %epoch:3.1-0.beta3.1
 
 Summary:	Audacious Media Player core plugins
 Name:		%name
@@ -220,9 +220,6 @@ sh ./autogen.sh
 #gw else cdaudio does not build (2.2-beta2)
 #define _disable_ld_no_undefined 1
 %configure2_5x --enable-amidiplug --enable-smb \
-%ifarch %ix86
---disable-sse2 \
-%endif
 --enable-scrobbler --disable-gtk3
 %ifarch %ix86 x86_64
 #--enable-usf
