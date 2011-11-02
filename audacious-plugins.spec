@@ -2,7 +2,7 @@
 %define version 3.1
 %define snapshot 0
 %define pre beta3
-%define rel 3
+%define rel 4
 %define build_plf 0
 %{?_with_plf: %{expand: %%global build_plf 1}}
 %if %build_plf
@@ -28,7 +28,7 @@
 %define extrarelsuffix plf
 %endif
 %endif
-%define audacious %epoch:3.1-0.beta3.1
+%define audacious %epoch:3.1-0.beta3.2
 
 Summary:	Audacious Media Player core plugins
 Name:		%name
@@ -54,8 +54,11 @@ BuildRequires:	libsamplerate-devel
 BuildRequires:	libmodplug-devel
 BuildRequires:	libmms-devel
 BuildRequires:  liblirc-devel
+%if %mdvver >= 201100
+BuildRequires:	gtk+3-devel
+%else
 BuildRequires:	gtk2-devel >= 2.6.0
-#BuildRequires:	gtk+3-devel
+%endif
 BuildRequires:  libmesaglut-devel
 BuildRequires:  libxcomposite-devel
 BuildRequires:  SDL-devel
@@ -221,7 +224,7 @@ sh ./autogen.sh
 #gw else cdaudio does not build (2.2-beta2)
 #define _disable_ld_no_undefined 1
 %configure2_5x --enable-amidiplug --enable-smb \
---enable-scrobbler --disable-gtk3
+--enable-scrobbler
 %ifarch %ix86 x86_64
 #--enable-usf
 %endif
