@@ -1,8 +1,8 @@
 %define name audacious-plugins
 %define version 3.1
 %define snapshot 0
-%define pre beta3
-%define rel 4
+%define prerel 0
+%define rel 1
 %define build_plf 0
 %{?_with_plf: %{expand: %%global build_plf 1}}
 %if %build_plf
@@ -12,9 +12,9 @@
 %define distsuffix plf
 %endif
 %endif
-%if %pre
-%define release		%mkrel -c %pre %rel
-%define fname %name-%version-%pre
+%if %prerel
+%define release		%mkrel -c %prerel %rel
+%define fname %name-%version-%prerel
 %else
 %define fname %name-%version
 %define release %mkrel %rel
@@ -36,7 +36,6 @@ Version:	%version
 Release:	%release%{?extrarelsuffix}
 Epoch:		5
 Source0:	http://distfiles.atheme.org/%fname.tar.bz2
-Patch0: audacious-fix-pulseaudio-lockup.patch
 Patch1: audacious-plugins-3.1-beta2-linking.patch
 #gw from Fedora, enable gnome keys by default
 Patch2: audacious-plugins-3.0-alpha1-enable-gnomeshortcuts.patch
