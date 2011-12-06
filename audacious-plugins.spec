@@ -74,7 +74,7 @@ BuildRequires:  libnotify-devel
 BuildRequires:  libbinio-devel
 #gw scrobbler and curl:
 BuildRequires:  libcurl-devel >= 7.9.7
-BuildRequires:  libneon-devel >= 0.26
+BuildRequires:  neon-devel >= 0.26
 BuildRequires:  libfluidsynth-devel
 BuildRequires:  libwavpack-devel
 BuildRequires:  libmtp-devel >= 0.3.0
