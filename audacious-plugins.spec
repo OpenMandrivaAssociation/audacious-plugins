@@ -1,7 +1,6 @@
 %define name audacious-plugins
-%define version 3.1.1
-%define snapshot 0
-%define prerel 0
+%define version 3.2
+%define prerel beta1
 %define rel 1
 %define build_plf 0
 %{?_with_plf: %{expand: %%global build_plf 1}}
@@ -28,15 +27,15 @@
 %define extrarelsuffix plf
 %endif
 %endif
-%define audacious %epoch:3.1-0.beta3.2
+%define audacious %epoch:3.2
 
 Summary:	Audacious Media Player core plugins
 Name:		%name
 Version:	%version
 Release:	%release%{?extrarelsuffix}
 Epoch:		5
-Source0:	http://distfiles.atheme.org/%fname.tar.bz2
-Patch1: audacious-plugins-3.1-beta2-linking.patch
+Source0:	http://distfiles.audacious-media-player.org/%fname.tar.bz2
+Patch1: audacious-plugins-3.2-beta1-linking.patch
 #gw from Fedora, enable gnome keys by default
 Patch2: audacious-plugins-3.0-alpha1-enable-gnomeshortcuts.patch
 License:	GPLv2+
@@ -100,7 +99,6 @@ Obsoletes:beep-media-player-mp4 audacious-extra-plugins
 Obsoletes: audacious-musepack
 Provides: audacious-musepack
 %endif
-BuildRequires: libsmbclient-devel
 #gw make sure the broken plugin is removed
 Obsoletes: audacious-timidity
 #gw 2.0.0 has its own crossfader and the old one does not build anymore
@@ -203,21 +201,15 @@ Group: Sound
 Summary: SMB/CIFS file system plugin for the Audacious media player
 Epoch: %epoch
 Requires: audacious >= %audacious
+BuildRequires: libsmbclient-devel
 
 %description -n audacious-smb
 This plugin allows Audacious to play content from a Samba or Windows network
 file system.
 
 %prep
-%if !%snapshot
 %setup -q -n %fname
-%else
-%setup -q -n %fname
-%endif
 %apply_patches
-%if %snapshot
-sh ./autogen.sh
-%endif
 
 %build
 #gw else cdaudio does not build (2.2-beta2)
@@ -251,6 +243,7 @@ rm -rf %{buildroot}
 %dir %{_libdir}/audacious
 %dir %{_libdir}/audacious/Container
 %{_libdir}/audacious/Container/asx.so
+%{_libdir}/audacious/Container/audpl.so
 %{_libdir}/audacious/Container/cue.so
 %{_libdir}/audacious/Container/m3u.so
 %{_libdir}/audacious/Container/pls.so
@@ -268,6 +261,7 @@ rm -rf %{buildroot}
 %{_libdir}/audacious/General/mtp_up.so
 %{_libdir}/audacious/General/notify.so
 %{_libdir}/audacious/General/scrobbler.so
+%{_libdir}/audacious/General/search-tool.so
 %{_libdir}/audacious/General/skins.so
 %{_libdir}/audacious/General/statusicon.so
 %{_libdir}/audacious/General/song_change.so
