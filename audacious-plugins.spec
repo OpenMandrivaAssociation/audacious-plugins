@@ -62,7 +62,7 @@ BuildRequires:  libxcomposite-devel
 BuildRequires:  SDL-devel
 BuildRequires:  libsndfile-devel
 %if %mdvver >= 201100
-BuildRequires:  libjack-devel >= 1.9.7
+BuildRequires:  jackit-devel >= 1.9.7
 %endif
 BuildRequires:  taglib-devel
 BuildRequires:  libmad-devel
