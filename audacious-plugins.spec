@@ -80,7 +80,7 @@ BuildRequires:  libmtp-devel >= 0.3.0
 BuildRequires:  libflac-devel
 BuildRequires:  libcddb-devel
 BuildRequires:  libcdio-devel
-BuildRequires:  libimlib2-devel
+BuildRequires:  imlib2-devel
 BuildRequires:  libshout-devel
 BuildRequires:  libbs2b-devel
 %if %mdvver >= 201100
