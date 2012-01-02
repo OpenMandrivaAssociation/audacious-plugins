@@ -265,6 +265,7 @@ rm -rf %{buildroot}
 %{_libdir}/audacious/General/gtkui.so
 %{_libdir}/audacious/General/hotkey.so
 %{_libdir}/audacious/General/lyricwiki.so
+%{_libdir}/audacious/General/mpris2.so
 %{_libdir}/audacious/General/mtp_up.so
 %{_libdir}/audacious/General/notify.so
 %{_libdir}/audacious/General/scrobbler.so
