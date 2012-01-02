@@ -29,6 +29,8 @@
 %endif
 %define audacious %epoch:3.2
 
+%define build_smb 0
+
 Summary:	Audacious Media Player core plugins
 Name:		%name
 Version:	%version
@@ -196,6 +198,7 @@ For the actual playing, it uses the excellent libsidplay (1|2)
 emulator engine that emulates 6510 CPU and 6581/8580 Sound Interface
 Device (SID) chip.
 
+%if %build_smb
 %package -n audacious-smb
 Group: Sound
 Summary: SMB/CIFS file system plugin for the Audacious media player
@@ -206,6 +209,7 @@ BuildRequires: libsmbclient-devel
 %description -n audacious-smb
 This plugin allows Audacious to play content from a Samba or Windows network
 file system.
+%endif
 
 %prep
 %setup -q -n %fname
@@ -214,7 +218,10 @@ file system.
 %build
 #gw else cdaudio does not build (2.2-beta2)
 #define _disable_ld_no_undefined 1
-%configure2_5x --enable-amidiplug --enable-smb \
+%configure2_5x --enable-amidiplug \
+%if %build_smb
+--enable-smb \
+%endif
 --enable-scrobbler
 %ifarch %ix86 x86_64
 #--enable-usf
@@ -348,6 +355,8 @@ rm -rf %{buildroot}
 %defattr(0644,root,root,0755)
 %_libdir/audacious/Input/amidi-plug/ap-fluidsynth.so
 
+%if %build_smb
 %files -n audacious-smb
 %defattr(-,root,root)
 %_libdir/audacious/Transport/smb.so
+%endif
