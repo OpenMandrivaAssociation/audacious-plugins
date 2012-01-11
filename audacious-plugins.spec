@@ -1,7 +1,7 @@
 %define name audacious-plugins
 %define version 3.2
 %define prerel beta2
-%define rel 1
+%define rel 2
 %define build_plf 0
 %{?_with_plf: %{expand: %%global build_plf 1}}
 %if %build_plf
@@ -85,10 +85,8 @@ BuildRequires:  libcdio-devel
 BuildRequires:  imlib2-devel
 BuildRequires:  libshout-devel
 BuildRequires:  libbs2b-devel
-%if 0
-%if %mdvver >= 201100
+%if %mdvver >= 201200
 BuildRequires:  pkgconfig(libavcodec) >= 53.40.0
-%endif
 %endif
 BuildRequires:  libcue-devel
 BuildRequires:  libmpg123-devel
@@ -276,10 +274,8 @@ rm -rf %{buildroot}
 %{_libdir}/audacious/General/statusicon.so
 %{_libdir}/audacious/General/song_change.so
 %dir %{_libdir}/audacious/Input
-%if 0
-%if %mdvver >= 201100
+%if %mdvver >= 201200
 %{_libdir}/audacious/Input/ffaudio.so
-%endif
 %endif
 %{_libdir}/audacious/Input/amidi-plug.so
 %{_libdir}/audacious/Input/cdaudio-ng.so
