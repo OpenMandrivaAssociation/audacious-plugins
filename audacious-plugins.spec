@@ -30,6 +30,10 @@
 %define audacious %epoch:3.2
 
 %define build_smb 0
+%define build_mpris2 1
+%if %mdvver <= 201100
+%define build_mpris2 0
+%endif
 
 Summary:	Audacious Media Player core plugins
 Name:		%name
@@ -58,6 +62,9 @@ BuildRequires:  liblirc-devel
 BuildRequires:	gtk+3-devel
 %else
 BuildRequires:	gtk2-devel >= 2.6.0
+%endif
+%if %build_mpris2
+BuildRequires:	glib2-devel >= 2.30
 %endif
 BuildRequires:  libmesaglut-devel
 BuildRequires:  libxcomposite-devel
@@ -265,7 +272,9 @@ rm -rf %{buildroot}
 %{_libdir}/audacious/General/gtkui.so
 %{_libdir}/audacious/General/hotkey.so
 %{_libdir}/audacious/General/lyricwiki.so
+%if %build_mpris2
 %{_libdir}/audacious/General/mpris2.so
+%endif
 %{_libdir}/audacious/General/mtp_up.so
 %{_libdir}/audacious/General/notify.so
 %{_libdir}/audacious/General/scrobbler.so
