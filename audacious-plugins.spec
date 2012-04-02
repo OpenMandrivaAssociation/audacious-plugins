@@ -153,7 +153,7 @@ Epoch: %epoch
 Requires: audacious >= %audacious
 Provides: audacious-esd
 Obsoletes: audacious-esd
-BuildRequires: libpulseaudio-devel
+BuildRequires: pulseaudio-devel
 
 %description  -n audacious-pulse
 Audacious audio output plugin for the pulseaudio
