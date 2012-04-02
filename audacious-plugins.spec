@@ -50,7 +50,7 @@ Url:		http://audacious-media-player.org/
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Requires:	audacious >= %audacious
 BuildRequires:	libaudacious-devel >= %audacious
-BuildRequires:	alsa-lib-devel >= 1.0.0
+BuildRequires:	libalsa-devel >= 1.0.0
 BuildRequires:	oggvorbis-devel
 BuildRequires:	libglade2.0-devel
 #gw crossfade
