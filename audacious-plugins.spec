@@ -41,7 +41,7 @@ Version:	%version
 Release:	%release%{?extrarelsuffix}
 Epoch:		5
 Source0:	http://distfiles.audacious-media-player.org/%fname.tar.bz2
-Patch1: audacious-plugins-3.2-beta1-linking.patch
+Patch1: audacious-plugins-3.2.2-linking.patch
 #gw from Fedora, enable gnome keys by default
 Patch2: audacious-plugins-3.0-alpha1-enable-gnomeshortcuts.patch
 License:	GPLv2+
