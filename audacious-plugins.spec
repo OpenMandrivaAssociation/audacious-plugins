@@ -69,7 +69,7 @@ BuildRequires:	glib2-devel >= 2.30
 BuildRequires:  libmesaglut-devel
 BuildRequires:  libxcomposite-devel
 BuildRequires:  SDL-devel
-BuildRequires:  libsndfile-devel
+BuildRequires:  sndfile-devel
 %if %mdvver >= 201100
 BuildRequires:  jackit-devel >= 1.9.7
 %endif
