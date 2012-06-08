@@ -1,7 +1,5 @@
-%define name audacious-plugins
-%define version 3.2.3
 %define prerel 0
-%define rel 1
+%define rel 2
 %define build_plf 0
 %{?_with_plf: %{expand: %%global build_plf 1}}
 %if %build_plf
@@ -36,8 +34,8 @@
 %endif
 
 Summary:	Audacious Media Player core plugins
-Name:		%name
-Version:	%version
+Name:		audacious-plugins
+Version:	3.2.3
 Release:	%release%{?extrarelsuffix}
 Epoch:		5
 Source0:	http://distfiles.audacious-media-player.org/%fname.tar.bz2
@@ -47,16 +45,15 @@ Patch2: audacious-plugins-3.0-alpha1-enable-gnomeshortcuts.patch
 License:	GPLv2+
 Group:		Sound
 Url:		http://audacious-media-player.org/
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Requires:	audacious >= %audacious
-BuildRequires:	libaudacious-devel >= %audacious
+BuildRequires:	pkgconfig(audacious)
 BuildRequires:	libalsa-devel >= 1.0.0
 BuildRequires:	oggvorbis-devel
 BuildRequires:	libglade2.0-devel
 #gw crossfade
 BuildRequires:	libsamplerate-devel
 BuildRequires:	libmodplug-devel
-BuildRequires:	libmms-devel
+BuildRequires:	pkgconfig(libmms)
 BuildRequires:  liblirc-devel
 %if %mdvver >= 201100
 BuildRequires:	gtk+3-devel
@@ -66,7 +63,7 @@ BuildRequires:	gtk2-devel >= 2.6.0
 %if %build_mpris2
 BuildRequires:	glib2-devel >= 2.30
 %endif
-BuildRequires:  libmesaglut-devel
+BuildRequires:  pkgconfig(glut)
 BuildRequires:  libxcomposite-devel
 BuildRequires:  SDL-devel
 BuildRequires:  sndfile-devel
@@ -75,7 +72,7 @@ BuildRequires:  jackit-devel >= 1.9.7
 %endif
 BuildRequires:  taglib-devel
 BuildRequires:  libmad-devel
-BuildRequires:  libmusicbrainz-devel
+BuildRequires:  pkgconfig(libmusicbrainz)
 BuildRequires:  libnotify-devel
 #gw currently does not build
 #BuildRequires:  bluez-devel >= 2.22
@@ -89,7 +86,7 @@ BuildRequires:  libmtp-devel >= 0.3.0
 BuildRequires:  libflac-devel
 BuildRequires:  libcddb-devel
 BuildRequires:  libcdio-devel
-BuildRequires:  imlib2-devel
+BuildRequires:  pkgconfig(imlib2)
 BuildRequires:  libshout-devel
 BuildRequires:  libbs2b-devel
 %if %mdvver >= 201200
