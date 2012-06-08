@@ -73,7 +73,7 @@ BuildRequires:  jackit-devel >= 1.9.7
 BuildRequires:  taglib-devel
 BuildRequires:  libmad-devel
 BuildRequires:  pkgconfig(libmusicbrainz)
-BuildRequires:  libnotify-devel
+BuildRequires:  pkgconfig(libnotify)
 #gw currently does not build
 #BuildRequires:  bluez-devel >= 2.22
 BuildRequires:  libbinio-devel
