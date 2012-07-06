@@ -1,5 +1,5 @@
 %define prerel 0
-%define rel 2
+%define rel 1
 %define build_plf 0
 %{?_with_plf: %{expand: %%global build_plf 1}}
 %if %build_plf
@@ -35,7 +35,7 @@
 
 Summary:	Audacious Media Player core plugins
 Name:		audacious-plugins
-Version:	3.2.3
+Version:	3.2.4
 Release:	%release%{?extrarelsuffix}
 Epoch:		5
 Source0:	http://distfiles.audacious-media-player.org/%fname.tar.bz2
