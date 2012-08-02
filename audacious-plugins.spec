@@ -25,7 +25,7 @@
 %define extrarelsuffix plf
 %endif
 %endif
-%define audacious %epoch:3.2
+%define audacious %epoch:3.3
 
 %define build_smb 0
 %define build_mpris2 1
@@ -35,13 +35,12 @@
 
 Summary:	Audacious Media Player core plugins
 Name:		audacious-plugins
-Version:	3.2.4
+Version:	3.3
 Release:	%release%{?extrarelsuffix}
 Epoch:		5
 Source0:	http://distfiles.audacious-media-player.org/%fname.tar.bz2
-Patch1: audacious-plugins-3.2.2-linking.patch
 #gw from Fedora, enable gnome keys by default
-Patch2: audacious-plugins-3.0-alpha1-enable-gnomeshortcuts.patch
+Patch2: audacious-plugins-3.3-enable-gnomeshortcuts.patch
 License:	GPLv2+
 Group:		Sound
 Url:		http://audacious-media-player.org/
@@ -55,11 +54,7 @@ BuildRequires:	libsamplerate-devel
 BuildRequires:	libmodplug-devel
 BuildRequires:	pkgconfig(libmms)
 BuildRequires:  liblirc-devel
-%if %mdvver >= 201100
 BuildRequires:	gtk+3-devel
-%else
-BuildRequires:	gtk2-devel >= 2.6.0
-%endif
 %if %build_mpris2
 BuildRequires:	glib2-devel >= 2.30
 %endif
@@ -268,6 +263,7 @@ rm -rf %{buildroot}
 %{_libdir}/audacious/General/gnomeshortcuts.so
 %{_libdir}/audacious/General/gtkui.so
 %{_libdir}/audacious/General/hotkey.so
+%{_libdir}/audacious/General/lirc.so
 %{_libdir}/audacious/General/lyricwiki.so
 %if %build_mpris2
 %{_libdir}/audacious/General/mpris2.so
@@ -315,13 +311,12 @@ rm -rf %{buildroot}
 %{_libdir}/audacious/Effect/stereo.so
 %{_libdir}/audacious/Effect/voice_removal.so
 %dir %{_libdir}/audacious/Output
-#%{_libdir}/audacious/Output/OSS.so
 %{_libdir}/audacious/Output/alsa.so
 %{_libdir}/audacious/Output/filewriter.so
 %{_libdir}/audacious/Output/null.so
 %{_libdir}/audacious/Output/sdlout.so
 %dir %{_libdir}/audacious/Transport/
-#%{_libdir}/audacious/Transport/gio.so
+%{_libdir}/audacious/Transport/gio.so
 %{_libdir}/audacious/Transport/mms.so
 %{_libdir}/audacious/Transport/neon.so
 %{_libdir}/audacious/Transport/unix-io.so
