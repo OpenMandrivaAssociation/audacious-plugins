@@ -268,7 +268,6 @@ rm -rf %{buildroot}
 %if %build_mpris2
 %{_libdir}/audacious/General/mpris2.so
 %endif
-%{_libdir}/audacious/General/mtp_up.so
 %{_libdir}/audacious/General/notify.so
 %{_libdir}/audacious/General/scrobbler.so
 %{_libdir}/audacious/General/search-tool.so
@@ -307,13 +306,11 @@ rm -rf %{buildroot}
 %{_libdir}/audacious/Effect/ladspa.so
 %{_libdir}/audacious/Effect/mixer.so
 %{_libdir}/audacious/Effect/resample.so
-%{_libdir}/audacious/Effect/sndstretch.so
 %{_libdir}/audacious/Effect/stereo.so
 %{_libdir}/audacious/Effect/voice_removal.so
 %dir %{_libdir}/audacious/Output
 %{_libdir}/audacious/Output/alsa.so
 %{_libdir}/audacious/Output/filewriter.so
-%{_libdir}/audacious/Output/null.so
 %{_libdir}/audacious/Output/sdlout.so
 %dir %{_libdir}/audacious/Transport/
 %{_libdir}/audacious/Transport/gio.so
