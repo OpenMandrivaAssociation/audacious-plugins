@@ -306,6 +306,7 @@ rm -rf %{buildroot}
 %{_libdir}/audacious/Effect/ladspa.so
 %{_libdir}/audacious/Effect/mixer.so
 %{_libdir}/audacious/Effect/resample.so
+%{_libdir}/audacious/Effect/speed-pitch.so
 %{_libdir}/audacious/Effect/stereo.so
 %{_libdir}/audacious/Effect/voice_removal.so
 %dir %{_libdir}/audacious/Output
