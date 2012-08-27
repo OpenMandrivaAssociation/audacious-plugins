@@ -35,7 +35,7 @@
 
 Summary:	Audacious Media Player core plugins
 Name:		audacious-plugins
-Version:	3.3
+Version:	3.3.1
 Release:	%release%{?extrarelsuffix}
 Epoch:		5
 Source0:	http://distfiles.audacious-media-player.org/%fname.tar.bz2
