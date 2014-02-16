@@ -50,7 +50,7 @@ BuildRequires:	pkgconfig(libmtp)
 BuildRequires:	pkgconfig(libmusicbrainz)
 BuildRequires:	pkgconfig(libnotify)
 BuildRequires:	pkgconfig(libpulse)
-BuildRequires:	pkgconfig(libsidplay2)
+BuildRequires:	pkgconfig(libsidplay)
 BuildRequires:	sidplay-devel
 
 BuildRequires:	pkgconfig(mad)
