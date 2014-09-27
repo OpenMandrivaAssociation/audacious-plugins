@@ -14,15 +14,13 @@
 
 Summary:	Audacious Media Player core plugins
 Name:		audacious-plugins
-Version:	3.3.4
+Version:	3.5.1
 Release:	1%{?extrarelsuffix}
 Epoch:		5
 License:	GPLv2+
 Group:		Sound
 Url:		http://audacious-media-player.org/
 Source0:	http://distfiles.audacious-media-player.org/%{name}-%{version}.tar.bz2
-#gw from Fedora, enable gnome keys by default
-Patch2:		audacious-plugins-3.3-enable-gnomeshortcuts.patch
 Requires:	audacious
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	pkgconfig(audacious)
@@ -50,8 +48,7 @@ BuildRequires:	pkgconfig(libmtp)
 BuildRequires:	pkgconfig(libmusicbrainz)
 BuildRequires:	pkgconfig(libnotify)
 BuildRequires:	pkgconfig(libpulse)
-BuildRequires:	pkgconfig(libsidplay2)
-BuildRequires:	sidplay-devel
+BuildRequires:	pkgconfig(libsidplayfp)
 
 BuildRequires:	pkgconfig(mad)
 BuildRequires:	pkgconfig(neon)
@@ -63,6 +60,7 @@ BuildRequires:	pkgconfig(taglib)
 BuildRequires:	pkgconfig(vorbis)
 BuildRequires:	pkgconfig(wavpack)
 BuildRequires:	pkgconfig(xcomposite)
+BuildRequires:	pkgconfig(soxr)
 
 #gw currently does not build
 #BuildRequires:	bluez-devel >= 2.22
@@ -171,6 +169,9 @@ export LDFLAGS="-lm"
 %if %{build_smb}
 --enable-smb \
 %endif
+%if !%build_plf
+	--disable-aac \
+%endif
 --enable-scrobbler
 %ifarch %ix86 x86_64
 #--enable-usf
@@ -189,11 +190,10 @@ rm -fv %{buildroot}%{_libdir}/audacious/Input/aac.so
 
 %files -f %{name}.lang
 %doc AUTHORS
-%dir %{_libdir}/audacious/Input/amidi-plug/
-%{_libdir}/audacious/Input/amidi-plug/ap-alsa.so
 %dir %{_libdir}/audacious
 %dir %{_libdir}/audacious/Container
 %{_libdir}/audacious/Container/asx.so
+%{_libdir}/audacious/Container/asx3.so
 %{_libdir}/audacious/Container/audpl.so
 %{_libdir}/audacious/Container/cue.so
 %{_libdir}/audacious/Container/m3u.so
@@ -205,6 +205,7 @@ rm -fv %{buildroot}%{_libdir}/audacious/Input/aac.so
 %{_libdir}/audacious/General/aosd.so
 #%{_libdir}/audacious/General/bluetooth.so
 %{_libdir}/audacious/General/cd-menu-items.so
+%{_libdir}/audacious/General/delete-files.so
 %{_libdir}/audacious/General/gnomeshortcuts.so
 %{_libdir}/audacious/General/gtkui.so
 %{_libdir}/audacious/General/hotkey.so
@@ -219,7 +220,6 @@ rm -fv %{buildroot}%{_libdir}/audacious/Input/aac.so
 %{_libdir}/audacious/General/song_change.so
 %dir %{_libdir}/audacious/Input
 %{_libdir}/audacious/Input/ffaudio.so
-%{_libdir}/audacious/Input/amidi-plug.so
 %{_libdir}/audacious/Input/cdaudio-ng.so
 %{_libdir}/audacious/Input/console.so
 %{_libdir}/audacious/Input/flacng.so
@@ -247,6 +247,7 @@ rm -fv %{buildroot}%{_libdir}/audacious/Input/aac.so
 %{_libdir}/audacious/Effect/ladspa.so
 %{_libdir}/audacious/Effect/mixer.so
 %{_libdir}/audacious/Effect/resample.so
+%{_libdir}/audacious/Effect/sox-resampler.so
 %{_libdir}/audacious/Effect/speed-pitch.so
 %{_libdir}/audacious/Effect/stereo.so
 %{_libdir}/audacious/Effect/voice_removal.so
@@ -258,10 +259,10 @@ rm -fv %{buildroot}%{_libdir}/audacious/Input/aac.so
 %{_libdir}/audacious/Transport/gio.so
 %{_libdir}/audacious/Transport/mms.so
 %{_libdir}/audacious/Transport/neon.so
-%{_libdir}/audacious/Transport/unix-io.so
 %dir %{_libdir}/audacious/Visualization
 %{_libdir}/audacious/Visualization/blur_scope.so
 %{_libdir}/audacious/Visualization/cairo-spectrum.so
+%{_libdir}/audacious/Visualization/gl-spectrum.so
 %{_datadir}/audacious
 
 %files  -n audacious-wavpack
@@ -285,7 +286,7 @@ rm -fv %{buildroot}%{_libdir}/audacious/Input/aac.so
 %endif
 
 %files  -n audacious-fluidsynth
-%_libdir/audacious/Input/amidi-plug/ap-fluidsynth.so
+%_libdir/audacious/Input/amidi-plug.so
 
 %if %{build_smb}
 %files -n audacious-smb
