@@ -14,8 +14,8 @@
 
 Summary:	Audacious Media Player core plugins
 Name:		audacious-plugins
-Version:	3.5.1
-Release:	1%{?extrarelsuffix}
+Version:	3.5.2
+Release:	1
 Epoch:		5
 License:	GPLv2+
 Group:		Sound
@@ -287,10 +287,9 @@ rm -fv %{buildroot}%{_libdir}/audacious/Input/aac.so
 %endif
 
 %files  -n audacious-fluidsynth
-%_libdir/audacious/Input/amidi-plug.so
+%{_libdir}/audacious/Input/amidi-plug.so
 
 %if %{build_smb}
 %files -n audacious-smb
 %{_libdir}/audacious/Transport/smb.so
 %endif
-
