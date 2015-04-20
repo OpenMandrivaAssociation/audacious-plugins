@@ -214,6 +214,7 @@ rm -fv %{buildroot}%{_libdir}/audacious/Input/aac.so
 %{_libdir}/audacious/General/lyricwiki.so
 %{_libdir}/audacious/General/mpris2.so
 %{_libdir}/audacious/General/notify.so
+%{_libdir}/audacious/General/playlist-manager.so
 %{_libdir}/audacious/General/scrobbler.so
 %{_libdir}/audacious/General/search-tool.so
 %{_libdir}/audacious/General/skins.so
@@ -248,6 +249,7 @@ rm -fv %{buildroot}%{_libdir}/audacious/Input/aac.so
 %{_libdir}/audacious/Effect/ladspa.so
 %{_libdir}/audacious/Effect/mixer.so
 %{_libdir}/audacious/Effect/resample.so
+%{_libdir}/audacious/Effect/silence-removal.so
 %{_libdir}/audacious/Effect/sox-resampler.so
 %{_libdir}/audacious/Effect/speed-pitch.so
 %{_libdir}/audacious/Effect/stereo.so
@@ -255,6 +257,7 @@ rm -fv %{buildroot}%{_libdir}/audacious/Input/aac.so
 %dir %{_libdir}/audacious/Output
 %{_libdir}/audacious/Output/alsa.so
 %{_libdir}/audacious/Output/filewriter.so
+%{_libdir}/audacious/Output/oss4.so
 %{_libdir}/audacious/Output/sdlout.so
 %dir %{_libdir}/audacious/Transport/
 %{_libdir}/audacious/Transport/gio.so
@@ -271,6 +274,7 @@ rm -fv %{buildroot}%{_libdir}/audacious/Input/aac.so
 
 %files  -n audacious-jack
 %{_libdir}/audacious/Output/jackout.so
+%{_libdir}/audacious/Output/jack-ng.so
 
 %files  -n audacious-pulse
 %{_libdir}/audacious/Output/pulse_audio.so
