@@ -190,7 +190,6 @@ rm -fv %{buildroot}%{_libdir}/audacious/Input/aac.so
 %find_lang %{name}
 
 %files -f %{name}.lang
-%doc AUTHORS
 %dir %{_libdir}/audacious
 %dir %{_libdir}/audacious/Container
 %{_libdir}/audacious/Container/asx.so
@@ -273,7 +272,6 @@ rm -fv %{buildroot}%{_libdir}/audacious/Input/aac.so
 %{_libdir}/audacious/Input/wavpack.so
 
 %files  -n audacious-jack
-%{_libdir}/audacious/Output/jackout.so
 %{_libdir}/audacious/Output/jack-ng.so
 
 %files  -n audacious-pulse
