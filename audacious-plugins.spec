@@ -14,8 +14,8 @@
 
 Summary:	Audacious Media Player core plugins
 Name:		audacious-plugins
-Version:	3.5.1
-Release:	2%{?extrarelsuffix}
+Version:	3.6.1
+Release:	1%{?extrarelsuffix}
 Epoch:		5
 License:	GPLv2+
 Group:		Sound
@@ -166,7 +166,7 @@ file system.
 export LDFLAGS="-lm"
 #gw else cdaudio does not build (2.2-beta2)
 #define _disable_ld_no_undefined 1
-%configure2_5x --enable-amidiplug \
+%configure --enable-amidiplug \
 %if %{build_smb}
 --enable-smb \
 %endif

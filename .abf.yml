@@ -1,4 +1,5 @@
 removed_sources:
   audacious-plugins-3.3.4.tar.bz2: 6493f051417a201fc0e2de7ef36a709676f96607
-sources:
   audacious-plugins-3.5.1.tar.bz2: c066f79ca1f213c998b651250d02a84982556946
+sources:
+  audacious-plugins-3.6.1.tar.bz2: 4e7b7e53d219a77cd915bede759de6d679a9e374
