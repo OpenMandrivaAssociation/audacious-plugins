@@ -14,7 +14,7 @@
 
 Summary:	Audacious Media Player core plugins
 Name:		audacious-plugins
-Version:	3.3.4
+Version:	3.4.3
 Release:	1%{?extrarelsuffix}
 Epoch:		5
 License:	GPLv2+
@@ -22,10 +22,9 @@ Group:		Sound
 Url:		http://audacious-media-player.org/
 Source0:	http://distfiles.audacious-media-player.org/%{name}-%{version}.tar.bz2
 #gw from Fedora, enable gnome keys by default
-Patch2:		audacious-plugins-3.3-enable-gnomeshortcuts.patch
 Requires:	audacious
 BuildRequires:	pkgconfig(alsa)
-BuildRequires:	pkgconfig(audacious)
+BuildRequires:	pkgconfig(audacious) = %{version}
 BuildRequires:	pkgconfig(flac)
 BuildRequires:	pkgconfig(fluidsynth)
 BuildRequires:	pkgconfig(glib-2.0)
@@ -50,8 +49,9 @@ BuildRequires:	pkgconfig(libmtp)
 BuildRequires:	pkgconfig(libmusicbrainz)
 BuildRequires:	pkgconfig(libnotify)
 BuildRequires:	pkgconfig(libpulse)
+BuildRequires:  pkgconfig(libsidplayfp)
 BuildRequires:	pkgconfig(libsidplay2)
-#BuildRequires:	sidplay-devel
+BuildRequires:	sidplay-devel
 
 BuildRequires:	pkgconfig(mad)
 BuildRequires:	pkgconfig(neon)
@@ -63,13 +63,9 @@ BuildRequires:	pkgconfig(taglib)
 BuildRequires:	pkgconfig(vorbis)
 BuildRequires:	pkgconfig(wavpack)
 BuildRequires:	pkgconfig(xcomposite)
-
-#gw currently does not build
-#BuildRequires:	bluez-devel >= 2.22
 %if %{build_plf}
 BuildRequires:	liblame-devel
 BuildRequires:	libfaad2-static-devel
-#gw ffmpeg plugin:
 Provides:	audacious-musepack
 %endif
 
@@ -81,7 +77,7 @@ This contains the basic plugin distribution. Audacious is useless
 without them.
 
 %if %{build_plf}
-This package is in restricted repository as it violates some patents.
+This package is in Restricted repository as it violates some patents.
 %endif
 
 %package  -n audacious-wavpack
@@ -165,8 +161,6 @@ file system.
 
 %build
 export LDFLAGS="-lm"
-#gw else cdaudio does not build (2.2-beta2)
-#define _disable_ld_no_undefined 1
 %configure2_5x --enable-amidiplug \
 %if %{build_smb}
 --enable-smb \
@@ -203,7 +197,6 @@ rm -fv %{buildroot}%{_libdir}/audacious/Input/aac.so
 %{_libdir}/audacious/General/alarm.so
 %{_libdir}/audacious/General/albumart.so
 %{_libdir}/audacious/General/aosd.so
-#%{_libdir}/audacious/General/bluetooth.so
 %{_libdir}/audacious/General/cd-menu-items.so
 %{_libdir}/audacious/General/gnomeshortcuts.so
 %{_libdir}/audacious/General/gtkui.so
@@ -229,9 +222,6 @@ rm -fv %{buildroot}%{_libdir}/audacious/Input/aac.so
 %{_libdir}/audacious/Input/psf2.so
 %{_libdir}/audacious/Input/sndfile.so
 %{_libdir}/audacious/Input/tonegen.so
-%ifarch %{ix86} x86_64
-#%{_libdir}/audacious/Input/usf.so
-%endif
 %{_libdir}/audacious/Input/vorbis.so
 %{_libdir}/audacious/Input/vtx.so
 %{_libdir}/audacious/Input/xsf.so
@@ -262,6 +252,8 @@ rm -fv %{buildroot}%{_libdir}/audacious/Input/aac.so
 %dir %{_libdir}/audacious/Visualization
 %{_libdir}/audacious/Visualization/blur_scope.so
 %{_libdir}/audacious/Visualization/cairo-spectrum.so
+%{_libdir}/audacious/Effect/sox-resampler.so
+%{_libdir}/audacious/Visualization/gl-spectrum.so
 %{_datadir}/audacious
 
 %files  -n audacious-wavpack
@@ -285,7 +277,7 @@ rm -fv %{buildroot}%{_libdir}/audacious/Input/aac.so
 %endif
 
 %files  -n audacious-fluidsynth
-%_libdir/audacious/Input/amidi-plug/ap-fluidsynth.so
+%{_libdir}/audacious/Input/amidi-plug/ap-fluidsynth.so
 
 %if %{build_smb}
 %files -n audacious-smb
