@@ -3,6 +3,8 @@
 %define build_plf 0
 #####################
 
+%define _disable_lto 1
+
 %{?_with_plf: %{expand: %%global build_plf 1}}
 
 %if %{build_plf}
@@ -14,7 +16,7 @@
 
 Summary:	Audacious Media Player core plugins
 Name:		audacious-plugins
-Version:	3.6.1
+Version:	3.6.2
 Release:	1%{?extrarelsuffix}
 Epoch:		5
 License:	GPLv2+
