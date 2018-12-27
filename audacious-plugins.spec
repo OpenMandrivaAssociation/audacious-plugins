@@ -282,7 +282,7 @@ rm -fv %{buildroot}%{_libdir}/audacious/Input/aac.so
 %{_libdir}/audacious/Input/sid.so
 
 %files  -n audacious-adplug
-%{_libdir}/audacious/Input/adplug.so
+#{_libdir}/audacious/Input/adplug.so
 
 %if 0
 %files  -n audacious-timidity
