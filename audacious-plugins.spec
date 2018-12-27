@@ -205,9 +205,9 @@ rm -fv %{buildroot}%{_libdir}/audacious/Input/aac.so
 %{_libdir}/audacious/General/albumart.so
 %{_libdir}/audacious/General/aosd.so
 #%{_libdir}/audacious/General/bluetooth.so
-%{_libdir}/audacious/General/cd-menu-items.so
+#{_libdir}/audacious/General/cd-menu-items.so
 %{_libdir}/audacious/General/delete-files.so
-%{_libdir}/audacious/General/gnomeshortcuts.so
+#{_libdir}/audacious/General/gnomeshortcuts.so
 %{_libdir}/audacious/General/gtkui.so
 %{_libdir}/audacious/General/hotkey.so
 %{_libdir}/audacious/General/lirc.so
@@ -222,7 +222,7 @@ rm -fv %{buildroot}%{_libdir}/audacious/Input/aac.so
 %{_libdir}/audacious/General/song_change.so
 %dir %{_libdir}/audacious/Input
 %{_libdir}/audacious/Input/ffaudio.so
-%{_libdir}/audacious/Input/cdaudio-ng.so
+#{_libdir}/audacious/Input/cdaudio-ng.so
 %{_libdir}/audacious/Input/console.so
 %{_libdir}/audacious/Input/flacng.so
 %{_libdir}/audacious/Input/madplug.so
