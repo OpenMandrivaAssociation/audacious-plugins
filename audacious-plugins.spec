@@ -47,7 +47,6 @@ BuildRequires:	pkgconfig(libmms)
 BuildRequires:	pkgconfig(libmodplug)
 BuildRequires:	pkgconfig(libmpg123)
 BuildRequires:	pkgconfig(libmtp)
-BuildRequires:	pkgconfig(libmusicbrainz)
 BuildRequires:	pkgconfig(libnotify)
 BuildRequires:	pkgconfig(libpulse)
 BuildRequires:	pkgconfig(libsidplayfp)
@@ -83,6 +82,14 @@ without them.
 %if %{build_plf}
 This package is in restricted repository as it violates some patents.
 %endif
+
+%package  -n audacious-audiocd
+Group:		Sound
+Summary:	Audio CD input plugin for Audacious
+Requires:	audacious
+
+%description  -n audacious-audiocd
+This is an Audio CD input plugin for Audacious
 
 %package  -n audacious-wavpack
 Group:		Sound
@@ -268,6 +275,10 @@ rm -fv %{buildroot}%{_libdir}/audacious/Input/aac.so
 %{_libdir}/audacious/Visualization/cairo-spectrum.so
 %{_libdir}/audacious/Visualization/gl-spectrum.so
 %{_datadir}/audacious
+
+%files -n audacious-audiocd
+%{_libdir}/audacious/General/cd-menu-items.so
+%{_libdir}/audacious/Input/cdaudio-ng.so
 
 %files  -n audacious-wavpack
 %{_libdir}/audacious/Input/wavpack.so
