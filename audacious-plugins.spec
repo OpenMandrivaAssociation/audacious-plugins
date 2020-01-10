@@ -168,7 +168,7 @@ file system.
 
 %prep
 %setup -q
-%apply_patches
+%autopatch -p1
 
 %build
 export LDFLAGS="-lm"
