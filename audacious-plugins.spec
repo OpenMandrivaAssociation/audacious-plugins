@@ -16,7 +16,7 @@
 
 Summary:	Audacious Media Player core plugins
 Name:		audacious-plugins
-Version:	3.10.1
+Version:	4.0
 Release:	1%{?extrarelsuffix}
 License:	GPLv2+
 Group:		Sound
@@ -174,22 +174,12 @@ file system.
 export LDFLAGS="-lm"
 #gw else cdaudio does not build (2.2-beta2)
 #define _disable_ld_no_undefined 1
-%configure --enable-amidiplug \
-%if %{build_smb}
---enable-smb \
-%endif
-%if !%build_plf
-	--disable-aac \
-%endif
---enable-scrobbler
-%ifarch %ix86 x86_64
-#--enable-usf
-%endif
 
-%make
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %if ! %{build_plf}
 rm -fv %{buildroot}%{_libdir}/audacious/Input/aac.so
