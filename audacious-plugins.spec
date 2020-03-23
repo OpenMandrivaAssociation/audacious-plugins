@@ -35,7 +35,7 @@ BuildRequires:	pkgconfig(glut)
 BuildRequires:	pkgconfig(gtk+-3.0)
 BuildRequires:	pkgconfig(imlib2)
 BuildRequires:	pkgconfig(jack)
-BuildRequires:	liblame-devel
+BuildRequires:	lame-devel
 
 BuildRequires:	pkgconfig(libavcodec) >= 53.40.0
 BuildRequires:	pkgconfig(libbinio)
