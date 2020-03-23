@@ -25,6 +25,8 @@ Source0:	http://distfiles.audacious-media-player.org/%{name}-%{version}.tar.bz2
 Requires:	audacious
 BuildRequires:  meson
 BuildRequires:	pkgconfig(alsa)
+# Disable it for now, because package is in unsupported repository (ex-contrib), re-enable it when pulled to main
+#BuildRequires:  pkgconfig(adplug)
 BuildRequires:	pkgconfig(audacious)
 BuildRequires:	pkgconfig(flac)
 BuildRequires:	pkgconfig(fluidsynth)
@@ -33,6 +35,7 @@ BuildRequires:	pkgconfig(glut)
 BuildRequires:	pkgconfig(gtk+-3.0)
 BuildRequires:	pkgconfig(imlib2)
 BuildRequires:	pkgconfig(jack)
+BuildRequires:	liblame-devel
 
 BuildRequires:	pkgconfig(libavcodec) >= 53.40.0
 BuildRequires:	pkgconfig(libbinio)
@@ -70,13 +73,14 @@ BuildRequires:  pkgconfig(Qt5Widgets)
 BuildRequires:  pkgconfig(Qt5Gui)
 BuildRequires:  pkgconfig(Qt5Network)
 BuildRequires:  pkgconfig(Qt5Multimedia)
+BuildRequires:  pkgconfig(Qt5OpenGL)
 BuildRequires:  qmake5
 
 #gw currently does not build
 #BuildRequires:	bluez-devel >= 2.22
 %if %{build_plf}
-BuildRequires:	liblame-devel
 BuildRequires:	libfaad2-static-devel
+BuildRequires:  faad2-devel
 #gw ffmpeg plugin:
 Provides:	audacious-musepack
 %endif
@@ -184,7 +188,11 @@ export LDFLAGS="-lm"
 #gw else cdaudio does not build (2.2-beta2)
 #define _disable_ld_no_undefined 1
 
-%meson
+%meson  \
+%if %{build_plf}
+# Faad is in restricted repo, so disable it for packages from main repo to availd patents problems.
+        -Dfaad=false 
+%endif
 %meson_build
 
 %install
