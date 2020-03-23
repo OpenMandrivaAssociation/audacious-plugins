@@ -16,14 +16,17 @@
 
 Summary:	Audacious Media Player core plugins
 Name:		audacious-plugins
-Version:	3.10.1
+Version:	4.0
 Release:	1%{?extrarelsuffix}
 License:	GPLv2+
 Group:		Sound
 Url:		http://audacious-media-player.org/
 Source0:	http://distfiles.audacious-media-player.org/%{name}-%{version}.tar.bz2
 Requires:	audacious
+BuildRequires:  meson
 BuildRequires:	pkgconfig(alsa)
+# Disable it for now, because package is in unsupported repository (ex-contrib), re-enable it when pulled to main
+#BuildRequires:  pkgconfig(adplug)
 BuildRequires:	pkgconfig(audacious)
 BuildRequires:	pkgconfig(flac)
 BuildRequires:	pkgconfig(fluidsynth)
@@ -32,6 +35,7 @@ BuildRequires:	pkgconfig(glut)
 BuildRequires:	pkgconfig(gtk+-3.0)
 BuildRequires:	pkgconfig(imlib2)
 BuildRequires:	pkgconfig(jack)
+BuildRequires:	lame-devel
 
 BuildRequires:	pkgconfig(libavcodec) >= 53.40.0
 BuildRequires:	pkgconfig(libbinio)
@@ -63,11 +67,20 @@ BuildRequires:	pkgconfig(wavpack)
 BuildRequires:	pkgconfig(xcomposite)
 BuildRequires:	pkgconfig(soxr)
 
+#QT Stack
+BuildRequires:  pkgconfig(Qt5Core)
+BuildRequires:  pkgconfig(Qt5Widgets)
+BuildRequires:  pkgconfig(Qt5Gui)
+BuildRequires:  pkgconfig(Qt5Network)
+BuildRequires:  pkgconfig(Qt5Multimedia)
+BuildRequires:  pkgconfig(Qt5OpenGL)
+BuildRequires:  qmake5
+
 #gw currently does not build
 #BuildRequires:	bluez-devel >= 2.22
 %if %{build_plf}
-BuildRequires:	liblame-devel
 BuildRequires:	libfaad2-static-devel
+BuildRequires:  faad2-devel
 #gw ffmpeg plugin:
 Provides:	audacious-musepack
 %endif
@@ -83,14 +96,6 @@ without them.
 This package is in restricted repository as it violates some patents.
 %endif
 
-%package  -n audacious-audiocd
-Group:		Sound
-Summary:	Audio CD input plugin for Audacious
-Requires:	audacious
-
-%description  -n audacious-audiocd
-This is an Audio CD input plugin for Audacious
-
 %package  -n audacious-wavpack
 Group:		Sound
 Summary:	Wavpack input plugin for Audacious
@@ -98,14 +103,6 @@ Requires:	audacious
 
 %description  -n audacious-wavpack
 This is a wavpack input plugin for Audacious based on libwavpack.
-
-%package  -n audacious-jack
-Group:		Sound
-Summary:	Audacious output plugin for the jack sound server
-Requires:	audacious
-
-%description  -n audacious-jack
-Audacious audio output plugin for the jack audio server.
 
 %package  -n audacious-pulse
 Group:		Sound
@@ -116,56 +113,6 @@ Requires:	audacious
 Audacious audio output plugin for the pulseaudio
 server.
 
-%package  -n audacious-adplug
-Summary:	AdLib player plugin for audacious
-Group:		Sound
-Requires:	audacious
-
-%description  -n audacious-adplug
-AdPlug is an Audacious input plugin It uses the AdPlug AdLib sound
-player library to play back a wide range of AdLib (OPL2) music file
-formats on top of an OPL2 emulator.  No OPL2 chip is required for
-playback.
-
-%package  -n audacious-fluidsynth
-Summary:	Fluidsynth MIDI plugin for audacious
-Group:		Sound
-Requires:	audacious
-
-%description  -n audacious-fluidsynth
-FluidSynth is a real-time software synthesizer based on the SoundFont 2
-specifications. It is a "software synthesizer". FluidSynth can read MIDI
-events from the MIDI input device and render them to the audio device.
-
-This is a fluidsynth backend for the Audacious Media Player to support the
-playback of MIDI files with the fluidsynth engine.
-
-%package  -n audacious-sid
-Group:		Sound
-Summary:	Audacious input plugin for C64 SID files
-Requires:	audacious
-
-%description  -n audacious-sid
-Audacious-SID is a plugin for the Audacious Media Player which provides
-support for playing the so-called "SID tunes", which are music
-from old Commodore computer programs like games, demos, etc.
-
-For the actual playing, it uses the excellent libsidplay (1|2)
-emulator engine that emulates 6510 CPU and 6581/8580 Sound Interface
-Device (SID) chip.
-
-%if %{build_smb}
-%package -n audacious-smb
-Group:		Sound
-Summary:	SMB/CIFS file system plugin for the Audacious media player
-Requires:	audacious
-BuildRequires:	pkgconfig(smbclient)
-
-%description -n audacious-smb
-This plugin allows Audacious to play content from a Samba or Windows network
-file system.
-%endif
-
 %prep
 %setup -q
 %autopatch -p1
@@ -174,137 +121,31 @@ file system.
 export LDFLAGS="-lm"
 #gw else cdaudio does not build (2.2-beta2)
 #define _disable_ld_no_undefined 1
-%configure --enable-amidiplug \
-%if %{build_smb}
---enable-smb \
-%endif
-%if !%build_plf
-	--disable-aac \
-%endif
---enable-scrobbler
-%ifarch %ix86 x86_64
-#--enable-usf
-%endif
 
-%make
+%meson  \
+        -Dfaad=false
+%meson_build
 
 %install
-%makeinstall_std
-
-%if ! %{build_plf}
-rm -fv %{buildroot}%{_libdir}/audacious/Input/aac.so
-%endif
+%meson_install
 
 %find_lang %{name}
 
 %files -f %{name}.lang
 %dir %{_libdir}/audacious
-%dir %{_libdir}/audacious/Container
-%{_libdir}/audacious/Container/asx.so
-%{_libdir}/audacious/Container/asx3.so
-%{_libdir}/audacious/Container/audpl.so
-%{_libdir}/audacious/Container/cue.so
-%{_libdir}/audacious/Container/m3u.so
-%{_libdir}/audacious/Container/pls.so
-%{_libdir}/audacious/Container/xspf.so
-%dir %{_libdir}/audacious/General
-%{_libdir}/audacious/General/alarm.so
-%{_libdir}/audacious/General/albumart.so
-%{_libdir}/audacious/General/aosd.so
-#%{_libdir}/audacious/General/bluetooth.so
-#{_libdir}/audacious/General/cd-menu-items.so
-%{_libdir}/audacious/General/delete-files.so
-#{_libdir}/audacious/General/gnomeshortcuts.so
-%{_libdir}/audacious/General/gtkui.so
-%{_libdir}/audacious/General/hotkey.so
-%{_libdir}/audacious/General/lirc.so
-%{_libdir}/audacious/General/lyricwiki.so
-%{_libdir}/audacious/General/mpris2.so
-%{_libdir}/audacious/General/notify.so
-%{_libdir}/audacious/General/playlist-manager.so
-%{_libdir}/audacious/General/scrobbler.so
-%{_libdir}/audacious/General/search-tool.so
-%{_libdir}/audacious/General/skins.so
-%{_libdir}/audacious/General/statusicon.so
-%{_libdir}/audacious/General/song_change.so
-%dir %{_libdir}/audacious/Input
-%{_libdir}/audacious/Input/ffaudio.so
-#{_libdir}/audacious/Input/cdaudio-ng.so
-%{_libdir}/audacious/Input/console.so
-%{_libdir}/audacious/Input/flacng.so
-%{_libdir}/audacious/Input/madplug.so
-%{_libdir}/audacious/Input/metronom.so
-%{_libdir}/audacious/Input/modplug.so
-%{_libdir}/audacious/Input/psf2.so
-%{_libdir}/audacious/Input/sndfile.so
-%{_libdir}/audacious/Input/tonegen.so
-%ifarch %{ix86} x86_64
-#%{_libdir}/audacious/Input/usf.so
-%endif
-%{_libdir}/audacious/Input/vorbis.so
-%{_libdir}/audacious/Input/vtx.so
-%{_libdir}/audacious/Input/xsf.so
-%if %{build_plf}
-%{_libdir}/audacious/Input/aac.so
-%endif
-%dir %{_libdir}/audacious/Effect/
-%{_libdir}/audacious/Effect/bs2b.so
-%{_libdir}/audacious/Effect/compressor.so
-%{_libdir}/audacious/Effect/crossfade.so
-%{_libdir}/audacious/Effect/crystalizer.so
-%{_libdir}/audacious/Effect/echo.so
-%{_libdir}/audacious/Effect/ladspa.so
-%{_libdir}/audacious/Effect/mixer.so
-%{_libdir}/audacious/Effect/resample.so
-%{_libdir}/audacious/Effect/silence-removal.so
-%{_libdir}/audacious/Effect/sox-resampler.so
-%{_libdir}/audacious/Effect/speed-pitch.so
-%{_libdir}/audacious/Effect/stereo.so
-%{_libdir}/audacious/Effect/voice_removal.so
-%dir %{_libdir}/audacious/Output
-%{_libdir}/audacious/Output/alsa.so
-%{_libdir}/audacious/Output/filewriter.so
-%{_libdir}/audacious/Output/oss4.so
-%{_libdir}/audacious/Output/sdlout.so
-%dir %{_libdir}/audacious/Transport/
-%{_libdir}/audacious/Transport/gio.so
-%{_libdir}/audacious/Transport/mms.so
-%{_libdir}/audacious/Transport/neon.so
-%dir %{_libdir}/audacious/Visualization
-%{_libdir}/audacious/Visualization/blur_scope.so
-%{_libdir}/audacious/Visualization/cairo-spectrum.so
-%{_libdir}/audacious/Visualization/gl-spectrum.so
 %{_datadir}/audacious
-
-%files -n audacious-audiocd
-%{_libdir}/audacious/General/cd-menu-items.so
-%{_libdir}/audacious/Input/cdaudio-ng.so
+%{_libdir}/audacious/Container/*
+%{_libdir}/audacious/Effect/*
+%{_libdir}/audacious/General/*
+%{_libdir}/audacious/Input/*
+%{_libdir}/audacious/Output/*
+%{_libdir}/audacious/Transport/*
+%{_libdir}/audacious/Visualization/
+%exclude %{_libdir}//audacious/Input/libwavpack.so
+%exclude %{_libdir}/audacious/Output/libpulse_audio.so
 
 %files  -n audacious-wavpack
-%{_libdir}/audacious/Input/wavpack.so
-
-%files  -n audacious-jack
-%{_libdir}/audacious/Output/jack-ng.so
+%{_libdir}/audacious/Input/libwavpack.so
 
 %files  -n audacious-pulse
-%{_libdir}/audacious/Output/pulse_audio.so
-
-%files  -n audacious-sid
-%{_libdir}/audacious/Input/sid.so
-
-%files  -n audacious-adplug
-#{_libdir}/audacious/Input/adplug.so
-
-%if 0
-%files  -n audacious-timidity
-%{_libdir}/audacious/Input/timidity.so
-%endif
-
-%files  -n audacious-fluidsynth
-%_libdir/audacious/Input/amidi-plug.so
-
-%if %{build_smb}
-%files -n audacious-smb
-%{_libdir}/audacious/Transport/smb.so
-%endif
-
+%{_libdir}/audacious/Output/libpulse_audio.so
