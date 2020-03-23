@@ -64,6 +64,12 @@ BuildRequires:	pkgconfig(wavpack)
 BuildRequires:	pkgconfig(xcomposite)
 BuildRequires:	pkgconfig(soxr)
 
+#QT Stack
+BuildRequires:  pkgconfig(Qt5Core)
+BuildRequires:  pkgconfig(Qt5Widgets)
+BuildRequires:  pkgconfig(Qt5Gui)
+BuildRequires:  qmake5
+
 #gw currently does not build
 #BuildRequires:	bluez-devel >= 2.22
 %if %{build_plf}
