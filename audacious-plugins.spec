@@ -189,10 +189,8 @@ export LDFLAGS="-lm"
 #define _disable_ld_no_undefined 1
 
 %meson  \
-%if %{build_plf}
 # Faad is in restricted repo, so disable it for packages from main repo to availd patents problems.
-        -Dfaad=false 
-%endif
+        -Dfaad=false
 %meson_build
 
 %install
