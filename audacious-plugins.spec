@@ -204,30 +204,29 @@ export LDFLAGS="-lm"
 %files -n audacious-audiocd
 
 %files  -n audacious-wavpack
-%{_libdir}/audacious/Input/wavpack.so
 
 %files  -n audacious-jack
-%{_libdir}/audacious/Output/jack-ng.so
+#%{_libdir}/audacious/Output/jack-ng.so
 
 %files  -n audacious-pulse
-%{_libdir}/audacious/Output/pulse_audio.so
+#%{_libdir}/audacious/Output/pulse_audio.so
 
 %files  -n audacious-sid
-%{_libdir}/audacious/Input/sid.so
+#%{_libdir}/audacious/Input/sid.so
 
 %files  -n audacious-adplug
 #{_libdir}/audacious/Input/adplug.so
 
 %if 0
-%files  -n audacious-timidity
-%{_libdir}/audacious/Input/timidity.so
+#%files  -n audacious-timidity
+#%{_libdir}/audacious/Input/timidity.so
 %endif
 
 %files  -n audacious-fluidsynth
-%_libdir/audacious/Input/amidi-plug.so
+#%_libdir/audacious/Input/amidi-plug.so
 
 %if %{build_smb}
-%files -n audacious-smb
-%{_libdir}/audacious/Transport/smb.so
+#%files -n audacious-smb
+#%{_libdir}/audacious/Transport/smb.so
 %endif
 
