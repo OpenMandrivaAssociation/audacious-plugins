@@ -96,14 +96,6 @@ without them.
 This package is in restricted repository as it violates some patents.
 %endif
 
-%package  -n audacious-audiocd
-Group:		Sound
-Summary:	Audio CD input plugin for Audacious
-Requires:	audacious
-
-%description  -n audacious-audiocd
-This is an Audio CD input plugin for Audacious
-
 %package  -n audacious-wavpack
 Group:		Sound
 Summary:	Wavpack input plugin for Audacious
@@ -111,14 +103,6 @@ Requires:	audacious
 
 %description  -n audacious-wavpack
 This is a wavpack input plugin for Audacious based on libwavpack.
-
-%package  -n audacious-jack
-Group:		Sound
-Summary:	Audacious output plugin for the jack sound server
-Requires:	audacious
-
-%description  -n audacious-jack
-Audacious audio output plugin for the jack audio server.
 
 %package  -n audacious-pulse
 Group:		Sound
@@ -128,56 +112,6 @@ Requires:	audacious
 %description  -n audacious-pulse
 Audacious audio output plugin for the pulseaudio
 server.
-
-%package  -n audacious-adplug
-Summary:	AdLib player plugin for audacious
-Group:		Sound
-Requires:	audacious
-
-%description  -n audacious-adplug
-AdPlug is an Audacious input plugin It uses the AdPlug AdLib sound
-player library to play back a wide range of AdLib (OPL2) music file
-formats on top of an OPL2 emulator.  No OPL2 chip is required for
-playback.
-
-%package  -n audacious-fluidsynth
-Summary:	Fluidsynth MIDI plugin for audacious
-Group:		Sound
-Requires:	audacious
-
-%description  -n audacious-fluidsynth
-FluidSynth is a real-time software synthesizer based on the SoundFont 2
-specifications. It is a "software synthesizer". FluidSynth can read MIDI
-events from the MIDI input device and render them to the audio device.
-
-This is a fluidsynth backend for the Audacious Media Player to support the
-playback of MIDI files with the fluidsynth engine.
-
-%package  -n audacious-sid
-Group:		Sound
-Summary:	Audacious input plugin for C64 SID files
-Requires:	audacious
-
-%description  -n audacious-sid
-Audacious-SID is a plugin for the Audacious Media Player which provides
-support for playing the so-called "SID tunes", which are music
-from old Commodore computer programs like games, demos, etc.
-
-For the actual playing, it uses the excellent libsidplay (1|2)
-emulator engine that emulates 6510 CPU and 6581/8580 Sound Interface
-Device (SID) chip.
-
-%if %{build_smb}
-%package -n audacious-smb
-Group:		Sound
-Summary:	SMB/CIFS file system plugin for the Audacious media player
-Requires:	audacious
-BuildRequires:	pkgconfig(smbclient)
-
-%description -n audacious-smb
-This plugin allows Audacious to play content from a Samba or Windows network
-file system.
-%endif
 
 %prep
 %setup -q
@@ -200,33 +134,18 @@ export LDFLAGS="-lm"
 %files -f %{name}.lang
 %dir %{_libdir}/audacious
 %{_datadir}/audacious
-
-%files -n audacious-audiocd
+%{_libdir}/audacious/Container/*
+%{_libdir}/audacious/Effect/*
+%{_libdir}/audacious/General/*
+%{_libdir}/audacious/Input/*
+%{_libdir}/audacious/Output/*
+%{_libdir}/audacious/Transport/*
+%{_libdir}/audacious/Visualization/
+%exclude %{_libdir}//audacious/Input/libwavpack.so
+%exclude %{_libdir}/audacious/Output/libpulse_audio.so
 
 %files  -n audacious-wavpack
-
-%files  -n audacious-jack
-#%{_libdir}/audacious/Output/jack-ng.so
+%{_libdir}/audacious/Input/libwavpack.so
 
 %files  -n audacious-pulse
-#%{_libdir}/audacious/Output/pulse_audio.so
-
-%files  -n audacious-sid
-#%{_libdir}/audacious/Input/sid.so
-
-%files  -n audacious-adplug
-#{_libdir}/audacious/Input/adplug.so
-
-%if 0
-#%files  -n audacious-timidity
-#%{_libdir}/audacious/Input/timidity.so
-%endif
-
-%files  -n audacious-fluidsynth
-#%_libdir/audacious/Input/amidi-plug.so
-
-%if %{build_smb}
-#%files -n audacious-smb
-#%{_libdir}/audacious/Transport/smb.so
-%endif
-
+%{_libdir}/audacious/Output/libpulse_audio.so
