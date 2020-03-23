@@ -195,10 +195,6 @@ export LDFLAGS="-lm"
 %install
 %meson_install
 
-%if ! %{build_plf}
-rm -fv %{buildroot}%{_libdir}/audacious/Input/aac.so
-%endif
-
 %find_lang %{name}
 
 %files -f %{name}.lang
@@ -206,8 +202,6 @@ rm -fv %{buildroot}%{_libdir}/audacious/Input/aac.so
 %{_datadir}/audacious
 
 %files -n audacious-audiocd
-%{_libdir}/audacious/General/cd-menu-items.so
-%{_libdir}/audacious/Input/cdaudio-ng.so
 
 %files  -n audacious-wavpack
 %{_libdir}/audacious/Input/wavpack.so
