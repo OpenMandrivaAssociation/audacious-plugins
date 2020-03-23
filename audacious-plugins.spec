@@ -68,6 +68,7 @@ BuildRequires:	pkgconfig(soxr)
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Widgets)
 BuildRequires:  pkgconfig(Qt5Gui)
+BuildRequires:  pkgconfig(Qt5Network)
 BuildRequires:  qmake5
 
 #gw currently does not build
