@@ -96,22 +96,6 @@ without them.
 This package is in restricted repository as it violates some patents.
 %endif
 
-%package  -n audacious-wavpack
-Group:		Sound
-Summary:	Wavpack input plugin for Audacious
-Requires:	audacious
-
-%description  -n audacious-wavpack
-This is a wavpack input plugin for Audacious based on libwavpack.
-
-%package  -n audacious-pulse
-Group:		Sound
-Summary:	Audacious output plugin for the Pulseaudio sound server
-Requires:	audacious
-
-%description  -n audacious-pulse
-Audacious audio output plugin for the pulseaudio
-server.
 
 %prep
 %setup -q
@@ -141,11 +125,3 @@ export LDFLAGS="-lm"
 %{_libdir}/audacious/Output/*
 %{_libdir}/audacious/Transport/*
 %{_libdir}/audacious/Visualization/
-%exclude %{_libdir}//audacious/Input/libwavpack.so
-%exclude %{_libdir}/audacious/Output/libpulse_audio.so
-
-%files  -n audacious-wavpack
-%{_libdir}/audacious/Input/libwavpack.so
-
-%files  -n audacious-pulse
-%{_libdir}/audacious/Output/libpulse_audio.so
