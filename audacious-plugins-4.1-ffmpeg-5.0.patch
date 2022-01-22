@@ -1,0 +1,52 @@
+diff -up audacious-plugins-4.1/src/ffaudio/ffaudio-core.cc.omv~ audacious-plugins-4.1/src/ffaudio/ffaudio-core.cc
+--- audacious-plugins-4.1/src/ffaudio/ffaudio-core.cc.omv~	2022-01-22 18:34:09.849913374 +0100
++++ audacious-plugins-4.1/src/ffaudio/ffaudio-core.cc	2022-01-22 18:35:59.967232980 +0100
+@@ -267,11 +267,11 @@ static AVInputFormat * get_format_by_ext
+     return f ? * f : nullptr;
+ }
+ 
+-static AVInputFormat * get_format_by_content (const char * name, VFSFile & file)
++static const AVInputFormat * get_format_by_content (const char * name, VFSFile & file)
+ {
+     AUDDBG ("Probing content: %s\n", name);
+ 
+-    AVInputFormat * f = nullptr;
++    const AVInputFormat * f = nullptr;
+ 
+     unsigned char buf[16384 + AVPROBE_PADDING_SIZE];
+     int size = 16;
+@@ -311,15 +311,15 @@ static AVInputFormat * get_format_by_con
+     return f;
+ }
+ 
+-static AVInputFormat * get_format (const char * name, VFSFile & file)
++static const AVInputFormat * get_format (const char * name, VFSFile & file)
+ {
+-    AVInputFormat * f = get_format_by_extension (name);
++    const AVInputFormat * f = get_format_by_extension (name);
+     return f ? f : get_format_by_content (name, file);
+ }
+ 
+ static AVFormatContext * open_input_file (const char * name, VFSFile & file)
+ {
+-    AVInputFormat * f = get_format (name, file);
++    const AVInputFormat * f = get_format (name, file);
+ 
+     if (! f)
+     {
+@@ -361,13 +361,13 @@ static bool find_codec (AVFormatContext
+ #endif
+         if (stream && stream->codecpar && stream->codecpar->codec_type == AVMEDIA_TYPE_AUDIO)
+         {
+-            AVCodec * codec = avcodec_find_decoder (stream->codecpar->codec_id);
++            const AVCodec * codec = avcodec_find_decoder (stream->codecpar->codec_id);
+ 
+             if (codec)
+             {
+                 cinfo->stream_idx = i;
+                 cinfo->stream = stream;
+-                cinfo->codec = codec;
++                //cinfo->codec = codec;
+ 
+                 return true;
+             }

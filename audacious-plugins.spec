@@ -17,11 +17,13 @@
 Summary:	Audacious Media Player core plugins
 Name:		audacious-plugins
 Version:	4.1
-Release:	2
+Release:	3
 License:	GPLv2+
 Group:		Sound
 Url:		http://audacious-media-player.org/
 Source0:	http://distfiles.audacious-media-player.org/%{name}-%{version}.tar.bz2
+Patch0:		audacious-plugins-4.1-ffmpeg-5.0.patch
+Patch1:		audacious-plugins-no-underlinking.patch
 Requires:	audacious
 BuildRequires:  meson
 BuildRequires:	pkgconfig(alsa)
@@ -98,16 +100,13 @@ This package is in restricted repository as it violates some patents.
 
 
 %prep
-%setup -q
-%autopatch -p1
+%autosetup -p1
+%meson
 
 %build
-export LDFLAGS="-lm"
+#export LDFLAGS="-lm"
 #gw else cdaudio does not build (2.2-beta2)
 #define _disable_ld_no_undefined 1
-
-%meson  \
-        -Dfaad=false
 %meson_build
 
 %install
