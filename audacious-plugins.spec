@@ -17,7 +17,7 @@
 Summary:	Audacious Media Player core plugins
 Name:		audacious-plugins
 Version:	4.2
-Release:	1
+Release:	2
 License:	GPLv2+
 Group:		Sound
 Url:		http://audacious-media-player.org/
