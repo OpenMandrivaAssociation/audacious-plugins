@@ -100,7 +100,7 @@ This package is in restricted repository as it violates some patents.
 
 %prep
 %autosetup -p1
-%meson
+%meson -Dgtk=false
 
 %build
 #export LDFLAGS="-lm"
