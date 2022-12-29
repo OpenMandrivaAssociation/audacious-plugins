@@ -17,7 +17,7 @@
 Summary:	Audacious Media Player core plugins
 Name:		audacious-plugins
 Version:	4.2
-Release:	2
+Release:	3
 License:	GPLv2+
 Group:		Sound
 Url:		http://audacious-media-player.org/
@@ -47,7 +47,6 @@ BuildRequires:	pkgconfig(libcdio)
 BuildRequires:	pkgconfig(libcue)
 BuildRequires:	pkgconfig(libcurl)
 BuildRequires:	pkgconfig(dbus-glib-1)
-BuildRequires:	pkgconfig(libglade-2.0)
 BuildRequires:	pkgconfig(liblircclient0)
 BuildRequires:	pkgconfig(libmms)
 BuildRequires:	pkgconfig(libmodplug)
