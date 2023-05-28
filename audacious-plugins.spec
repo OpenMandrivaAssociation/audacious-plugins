@@ -23,7 +23,7 @@ Group:		Sound
 Url:		http://audacious-media-player.org/
 Source0:	http://distfiles.audacious-media-player.org/%{name}-%{version}.tar.bz2
 
-Patch1:		audacious-plugins-no-underlinking.patch
+#Patch1:		audacious-plugins-no-underlinking.patch
 Requires:	audacious
 BuildRequires:  meson
 BuildRequires:	pkgconfig(alsa)
