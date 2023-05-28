@@ -16,8 +16,8 @@
 
 Summary:	Audacious Media Player core plugins
 Name:		audacious-plugins
-Version:	4.2
-Release:	4
+Version:	4.3.1
+Release:	1
 License:	GPLv2+
 Group:		Sound
 Url:		http://audacious-media-player.org/
@@ -100,7 +100,9 @@ This package is in restricted repository as it violates some patents.
 
 %prep
 %autosetup -p1
-%meson -Dgtk=false
+%meson \
+        -Dgtk=false \
+        -Dgtk3=true
 
 %build
 #export LDFLAGS="-lm"
