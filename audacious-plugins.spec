@@ -25,6 +25,7 @@ Source0:	http://distfiles.audacious-media-player.org/%{name}-%{version}.tar.bz2
 
 #Patch1:		audacious-plugins-no-underlinking.patch
 Requires:	audacious
+BuildRequires:	gettext
 BuildRequires:  meson
 BuildRequires:	pkgconfig(alsa)
 # Disable it for now, because package is in unsupported repository (ex-contrib), re-enable it when pulled to main
