@@ -16,12 +16,12 @@
 
 Summary:	Audacious Media Player core plugins
 Name:		audacious-plugins
-Version:	4.3.1
-Release:	2
+Version:	4.4
+Release:	1
 License:	GPLv2+
 Group:		Sound
-Url:		http://audacious-media-player.org/
-Source0:	http://distfiles.audacious-media-player.org/%{name}-%{version}.tar.bz2
+Url:		https://audacious-media-player.org/
+Source0:	https://distfiles.audacious-media-player.org/%{name}-%{version}.tar.bz2
 
 #Patch1:		audacious-plugins-no-underlinking.patch
 Requires:	audacious
