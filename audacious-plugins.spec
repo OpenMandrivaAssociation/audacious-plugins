@@ -39,7 +39,7 @@ BuildRequires:	pkgconfig(gtk+-3.0)
 BuildRequires:	pkgconfig(imlib2)
 BuildRequires:	pkgconfig(jack)
 BuildRequires:	lame-devel
-
+BuildRequires:  pkgconfig(json-glib-1.0)
 BuildRequires:	pkgconfig(libavcodec) >= 53.40.0
 BuildRequires:	pkgconfig(libbinio)
 BuildRequires:	pkgconfig(libbs2b)
