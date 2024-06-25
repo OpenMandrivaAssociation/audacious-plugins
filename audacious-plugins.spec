@@ -70,13 +70,13 @@ BuildRequires:	pkgconfig(xcomposite)
 BuildRequires:	pkgconfig(soxr)
 
 #QT Stack
-BuildRequires:  pkgconfig(Qt5Core)
-BuildRequires:  pkgconfig(Qt5Widgets)
-BuildRequires:  pkgconfig(Qt5Gui)
-BuildRequires:  pkgconfig(Qt5Network)
-BuildRequires:  pkgconfig(Qt5Multimedia)
-BuildRequires:  pkgconfig(Qt5OpenGL)
-BuildRequires:  qmake5
+BuildRequires:  pkgconfig(Qt6Core)
+BuildRequires:  pkgconfig(Qt6Widgets)
+BuildRequires:  pkgconfig(Qt6Gui)
+BuildRequires:  pkgconfig(Qt6Network)
+BuildRequires:  pkgconfig(Qt6Multimedia)
+BuildRequires:  pkgconfig(Qt6OpenGL)
+BuildRequires:  qmake-qt6
 
 #gw currently does not build
 #BuildRequires:	bluez-devel >= 2.22
@@ -102,8 +102,7 @@ This package is in restricted repository as it violates some patents.
 %prep
 %autosetup -p1
 %meson \
-        -Dgtk=false \
-        -Dgtk3=true
+        -Dgtk=true
 
 %build
 #export LDFLAGS="-lm"
