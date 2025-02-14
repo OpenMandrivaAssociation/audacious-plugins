@@ -31,6 +31,9 @@ BuildRequires:	pkgconfig(alsa)
 # Disable it for now, because package is in unsupported repository (ex-contrib), re-enable it when pulled to main
 #BuildRequires:  pkgconfig(adplug)
 BuildRequires:	pkgconfig(audacious)
+# This is ducking wrong like whole splits, ducking wrong
+# WHY ducking hooked noses don't think about the consequences. Enough fucking splits, revert that ducking mess
+BuildRequires:  %{_lib}audgui6
 BuildRequires:	pkgconfig(flac)
 BuildRequires:	pkgconfig(fluidsynth)
 BuildRequires:	pkgconfig(glib-2.0)
