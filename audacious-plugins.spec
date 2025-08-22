@@ -65,6 +65,7 @@ BuildRequires:	pkgconfig(mad)
 BuildRequires:	pkgconfig(neon)
 BuildRequires:	pkgconfig(ogg)
 BuildRequires:	pkgconfig(opus)
+BuildRequires:	pkgconfig(opusfile)
 #QT Stack
 BuildRequires:	pkgconfig(Qt6Core)
 BuildRequires:	pkgconfig(Qt6Gui)
