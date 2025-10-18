@@ -14,12 +14,13 @@
 
 Summary:	Audacious Media Player core plugins
 Name:	audacious-plugins
-Version:	4.5
-Release:	3
+Version:	4.5.1
+Release:	1
 License:	GPLv2+
 Group:	Sound
 Url:		https://audacious-media-player.org/
 Source0:	https://distfiles.audacious-media-player.org/%{name}-%{version}.tar.bz2
+BuildRequires:	chrpath
 BuildRequires:	gettext
 BuildRequires:	meson >= 0.53
 BuildRequires:	ninja
@@ -127,5 +128,8 @@ This package is in restricted repository as it violates some patents.
 
 %install
 %meson_install
+
+# Avoid error
+chrpath -d %{buildroot}%{_libdir}/audacious/Output/sdlout.so
 
 %find_lang %{name}
