@@ -14,7 +14,7 @@
 
 Summary:	Audacious Media Player core plugins
 Name:	audacious-plugins
-Version:	4.5.1
+Version:	4.6.1
 Release:	1
 License:	GPLv2+
 Group:	Sound
@@ -27,11 +27,11 @@ BuildRequires:	ninja
 BuildRequires:	qmake-qt6
 # This is ducking wrong like whole splits, ducking wrong
 # WHY ducking hooked noses don't think about the consequences. Enough fucking splits, revert that ducking mess
-BuildRequires:	%{_lib}audgui6
+BuildRequires:	%{_lib}audgui7
 BuildRequires:	pkgconfig(alsa)
 # Disable it for now, because package is in Extra, re-enable it when pulled to main
 #BuildRequires:	pkgconfig(adplug)
-BuildRequires:	pkgconfig(audacious) >= 4.5
+BuildRequires:	pkgconfig(audacious) >= 4.6
 BuildRequires: pkgconfig(bluez)
 BuildRequires:	pkgconfig(dbus-glib-1)
 BuildRequires:	pkgconfig(flac)
@@ -59,6 +59,8 @@ BuildRequires:	pkgconfig(libmodplug)
 BuildRequires:	pkgconfig(libmpg123)
 BuildRequires:	pkgconfig(libmtp)
 BuildRequires:	pkgconfig(libnotify)
+# This is in Extra
+#BuildRequires:	pkgconfig(libopenmpt)
 BuildRequires:	pkgconfig(libpipewire-0.3)
 BuildRequires:	pkgconfig(libpulse)
 BuildRequires:	pkgconfig(libsidplayfp)
@@ -86,6 +88,7 @@ BuildRequires:	pkgconfig(vorbisenc)
 BuildRequires:	pkgconfig(wavpack)
 BuildRequires:	pkgconfig(xcomposite)
 BuildRequires:	pkgconfig(xrender)
+BuildRequires:	pkgconfig(zlib)
 
 %if %{build_plf}
 BuildRequires:	libfaad2-static-devel
