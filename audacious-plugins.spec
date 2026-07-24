@@ -15,7 +15,7 @@
 Summary:	Audacious Media Player core plugins
 Name:	audacious-plugins
 Version:	4.6.1
-Release:	1
+Release:	2
 License:	GPLv2+
 Group:	Sound
 Url:		https://audacious-media-player.org/
@@ -28,12 +28,14 @@ BuildRequires:	qmake-qt6
 # This is ducking wrong like whole splits, ducking wrong
 # WHY ducking hooked noses don't think about the consequences. Enough fucking splits, revert that ducking mess
 BuildRequires:	%{_lib}audgui7
+BuildRequires:	faad2-static-devel
 BuildRequires:	pkgconfig(alsa)
-# Disable it for now, because package is in Extra, re-enable it when pulled to main
+# This is in Extra, re-enable it when pulled to main
 #BuildRequires:	pkgconfig(adplug)
 BuildRequires:	pkgconfig(audacious) >= 4.6
-BuildRequires: pkgconfig(bluez)
+BuildRequires:	pkgconfig(bluez)
 BuildRequires:	pkgconfig(dbus-glib-1)
+BuildRequires:	pkgconfig(faad2)
 BuildRequires:	pkgconfig(flac)
 BuildRequires:	pkgconfig(fluidsynth)
 BuildRequires:	pkgconfig(glib-2.0) >= 2.32
@@ -69,7 +71,6 @@ BuildRequires:	pkgconfig(neon)
 BuildRequires:	pkgconfig(ogg)
 BuildRequires:	pkgconfig(opus)
 BuildRequires:	pkgconfig(opusfile)
-#QT Stack
 BuildRequires:	pkgconfig(Qt6Core)
 BuildRequires:	pkgconfig(Qt6Gui)
 BuildRequires:	pkgconfig(Qt6Multimedia)
@@ -89,14 +90,11 @@ BuildRequires:	pkgconfig(wavpack)
 BuildRequires:	pkgconfig(xcomposite)
 BuildRequires:	pkgconfig(xrender)
 BuildRequires:	pkgconfig(zlib)
-
 %if %{build_plf}
-BuildRequires:	libfaad2-static-devel
-BuildRequires:	faad2-devel
 #gw ffmpeg plugin:
 Provides:	audacious-musepack
 %endif
-Requires:	audacious = %{version}-%{release}
+Requires:	audacious = %{version}
 
 %description
 Audacious is a media player based on the BMP music playing application.
